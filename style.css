@@ -19,6 +19,39 @@
             --avatar-border: 3px;
         }
 
+        /* Retro font (big titles only) */
+        h1, .section-title, .logo {
+            font-family: 'Press Start 2P', monospace;
+        }
+
+        /* Icon styles */
+        .greeting-icon { width:20px; height:20px; vertical-align:middle; margin-right:8px; }
+        .stat-icon { width:40px; height:40px; display:block; margin:0 auto 10px; }
+        .skill-icon-img { width:44px; height:44px; display:block; margin:0 auto 12px; }
+        .project-icon { width:48px; height:48px; display:block; margin:0 auto; }
+        .social-icon { width:20px; height:20px; display:inline-block; vertical-align:middle; }
+        .footer-icon { width:18px; height:18px; vertical-align:middle; margin:0 6px; }
+        .inline-cat-icon { width:20px; height:20px; vertical-align:middle; margin-right:8px; }
+
+        /* Ensure external SVG icons appear white on dark background */
+        .greeting-icon,
+        .stat-icon,
+        .skill-icon-img,
+        .project-icon,
+        .social-icon,
+        .footer-icon,
+        .inline-cat-icon {
+            filter: invert(1) saturate(0) brightness(2);
+            opacity: 0.98;
+        }
+
+        /* Slightly reduce size on very small screens */
+        @media (max-width: 480px) {
+            .stat-icon { width:32px; height:32px; }
+            .skill-icon-img { width:36px; height:36px; }
+            .project-icon { width:36px; height:36px; }
+        }
+
         /* Animated Background */
         .bg-animation {
             position: fixed;
