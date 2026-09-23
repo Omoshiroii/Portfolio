@@ -41,4 +41,6 @@ The existing GitHub Actions workflow publishes the repository's static files on 
 
 The shared page is a synchronous server component. Keep browser behavior in `public/newspaper.js` so it also works in the standalone edition.
 
-The masthead uses the open-source UnifrakturCook typeface for the Gothic newspaper look. Barlow Condensed and DM Sans support the headlines and labels. Fonts are served locally; their licenses are included in `public/assets/fonts/`. Artwork and portfolio images come from the supplied references and existing project assets.
+The masthead prefers Engravers' Old English BT when it is installed on the viewer's device, followed by Old English Text MT and the bundled open-source UnifrakturCook. The exact Engravers face is not included in this repository; a licensed webfont is needed to make it consistent across devices. Barlow Condensed and DM Sans support the headlines and labels. Bundled font licenses are included in `public/assets/fonts/`.
+
+The front edition uses the supplied Gotham newspaper artwork in SVG viewports for the headline texture and photograph. Gray paper, folds, scratches, crimson handwriting, and compact article columns are styled in `style.css`; `public/assets/press-distress.svg` supplies the surface wear. Pointer movement gently tilts the sheet and shifts the photograph and light. The effects control pauses motion, and device reduced-motion preferences are respected automatically. Artwork and portfolio images come from the supplied references and existing project assets.

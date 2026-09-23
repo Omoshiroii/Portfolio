@@ -25,7 +25,7 @@ function JokerGraffiti() {
     <span className="margin-madness">HA<br />HA<br />HA!</span>
     <span className="graffiti-question">?</span>
     <svg className="graffiti-arrow" viewBox="0 0 160 210" fill="none"><path d="M18 190C154 162 164 72 83 26M82 26L89 69M82 26L125 39M26 186L19 198" /></svg>
-    <svg className="blood-spatter" viewBox="0 0 200 220" fill="currentColor"><path d="m84 94 13-30 2 26 17-7-9 19 31 8-34 4-6 29-8-22-18 9 6-22-22-7 27-1Z" /><circle cx="123" cy="66" r="5" /><circle cx="57" cy="80" r="3" /><circle cx="144" cy="123" r="6" /><circle cx="123" cy="149" r="2" /><circle cx="71" cy="152" r="4" /><circle cx="159" cy="92" r="2" /><circle cx="39" cy="116" r="2" /><path d="m96 109 2 83-4 9-2-12Zm46 14 3 43-4 9-2-15Z" /></svg>
+    <svg className="blood-spatter" viewBox="0 0 200 220" fill="currentColor"><path d="M89 90c-7-6-8-18-13-15s4 16-1 19-18-4-18 1 16 4 15 10-13 10-8 13 14-10 19-5-1 17 5 16 4-14 10-12 9 10 12 5-8-12-3-17 22-1 20-6-19 2-20-4 7-15 2-17-5 17-12 15Z" /><circle cx="123" cy="66" r="5" /><circle cx="57" cy="80" r="3" /><circle cx="144" cy="123" r="6" /><circle cx="123" cy="149" r="2" /><circle cx="71" cy="152" r="4" /><circle cx="159" cy="92" r="2" /><circle cx="39" cy="116" r="2" /><path d="m96 109 2 83-4 9-2-12Zm46 14 3 43-4 9-2-15Z" /></svg>
     <span className="red-scrawl">a little more chaos.</span>
   </div>;
 }
@@ -60,7 +60,7 @@ export default function Home() {
 
         <section className="front-page" aria-labelledby="hero-title">
           <div className="front-page-kicker"><span><i className="red-square" /> SPECIAL REPORT / A CITY ON THE EDGE</span><span>FEAR. OBSESSION. THE WILL TO BUILD.</span></div>
-          <h1 className="hero-title" id="hero-title"><span aria-hidden="true">BATMAN</span><span className="sr-only">Taha Zerrad — The Gotham Times engineering portfolio</span></h1>
+          <h1 className="hero-title" id="hero-title"><svg className="hero-wordmark" viewBox="0 0 1200 215" preserveAspectRatio="none" aria-hidden="true"><defs><pattern id="headline-ink" patternUnits="userSpaceOnUse" width="1200" height="215"><rect width="1200" height="215" fill="#171916" /><image href="public/assets/gotham-edition.jpeg" width="1200" height="1680" y="-267" opacity=".7" /><rect width="1200" height="215" fill="#171916" opacity=".25" /></pattern></defs><text x="4" y="210" textLength="1192" lengthAdjust="spacingAndGlyphs" fill="url(#headline-ink)">BATMAN</text></svg><span className="sr-only">Taha Zerrad — The Gotham Times engineering portfolio</span></h1>
           <div className="headline-banner"><span>WILL THE DARK KNIGHT RISE TONIGHT?</span><Bat /></div>
           <div className="hero-scene">
             <aside className="joker-poster" aria-label="Gotham Theater Joker poster">
@@ -70,7 +70,7 @@ export default function Home() {
               <span className="poster-theater">GOTHAM THEATER</span><span className="poster-fine">NO RULES. NO REFUNDS. NO WAY OUT.</span>
             </aside>
             <figure className="gotham-photograph">
-              <div className="photo-print" role="img" aria-label="A distressed newspaper photograph of Batman looking back over his shoulder in Gotham" />
+              <svg className="photo-print" viewBox="238 467 445 266" preserveAspectRatio="xMidYMin slice" role="img" aria-label="A distressed newspaper photograph of Batman looking back over his shoulder in Gotham"><image href="public/assets/gotham-edition.jpeg" width="735" height="1029" /></svg>
               <div className="photo-dateline"><span>GOTHAM CITY / CRIME &amp; CONSEQUENCE</span><span>EXCLUSIVE PHOTOGRAPH · 01</span></div>
               <div className="flying-bats" aria-hidden="true"><Bat /><Bat /><Bat /><Bat /><Bat /></div>
               <span className="photo-evidence" aria-hidden="true">EVIDENCE<br /><b>01—28</b></span>
