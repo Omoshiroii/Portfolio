@@ -1,7 +1,5 @@
-<<<<<<< HEAD
 desktop.ini
 folderico-white.ico
-=======
 # Logs
 logs
 *.log
@@ -14,6 +12,12 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+.next/
+.next-dev/
+.next-production/
+out/
+*.tsbuildinfo
+.qa/
 *.local
 
 # Editor directories and files
@@ -26,4 +30,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
->>>>>>> 546e805cfb5d5d325fae850649519e8920f28818
