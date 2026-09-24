@@ -155,6 +155,81 @@
       let pointerClientX = 0;
       let pointerClientY = 0;
       let userPaused = motionToggle?.getAttribute("aria-pressed") === "true";
+      const nightEdition = document.querySelector(".night-edition");
+      const revealTargets = [...document.querySelectorAll(".night-edition section, .night-edition .night-opening")];
+      const nightPhotos = [...document.querySelectorAll(".night-edition .night-feature-photo")].map((photo) => ({
+        photo,
+        scene: photo.closest("section, .night-opening") || photo.parentElement,
+      }));
+      let sceneFrame = 0;
+      let revealObserver = null;
+
+      function revealAllScenes() {
+        revealTargets.forEach((target) => target.classList.add("is-visible"));
+      }
+
+      if (nightEdition && revealTargets.length && "IntersectionObserver" in window) {
+        revealObserver = new IntersectionObserver((entries) => {
+          if (userPaused || reducedMotion.matches || document.hidden) return;
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("is-visible");
+            revealObserver.unobserve(entry.target);
+          });
+        }, { rootMargin: "0px 0px -30px 0px", threshold: 0 });
+        // Content is visible without this enhancement, and never hidden for reduced motion.
+        if (userPaused || reducedMotion.matches) revealAllScenes();
+        nightEdition.classList.add("has-reveals");
+        document.body.classList.add("cinematic-ready");
+        nightEdition.addEventListener("focusin", (event) => {
+          const target = event.target.closest("section, .night-opening");
+          if (!revealTargets.includes(target)) return;
+          target.classList.add("is-visible");
+          revealObserver.unobserve(target);
+        });
+      } else {
+        revealAllScenes();
+      }
+
+      function resetSceneDrift() {
+        window.cancelAnimationFrame(sceneFrame);
+        sceneFrame = 0;
+        nightPhotos.forEach(({ photo }) => photo.style.setProperty("--scene-drift", "0px"));
+      }
+
+      function queueSceneDrift() {
+        if (sceneFrame || userPaused || reducedMotion.matches || document.hidden) return;
+        sceneFrame = window.requestAnimationFrame(() => {
+          sceneFrame = 0;
+          if (userPaused || reducedMotion.matches || document.hidden) return;
+          const viewportHeight = window.innerHeight || root.clientHeight;
+          // Batch geometry reads before writes; scrolling queues work, never a continuous loop.
+          const drifts = nightPhotos.map(({ photo, scene }) => {
+            const bounds = scene.getBoundingClientRect();
+            const distance = viewportHeight / 2 - (bounds.top + bounds.height / 2);
+            const range = Math.max(1, (viewportHeight + bounds.height) / 2);
+            return { photo, drift: Math.max(-1, Math.min(1, distance / range)) * 24 };
+          });
+          drifts.forEach(({ photo, drift }) => photo.style.setProperty("--scene-drift", `${drift.toFixed(2)}px`));
+        });
+      }
+
+      function configureNightEffects(paused) {
+        revealObserver?.disconnect();
+        window.removeEventListener("scroll", queueSceneDrift);
+        window.removeEventListener("resize", queueSceneDrift);
+        resetSceneDrift();
+        if (paused) revealAllScenes();
+        if (paused || document.hidden) return;
+        revealTargets.forEach((target) => {
+          if (!target.classList.contains("is-visible")) revealObserver?.observe(target);
+        });
+        if (nightPhotos.length) {
+          window.addEventListener("scroll", queueSceneDrift, { passive: true });
+          window.addEventListener("resize", queueSceneDrift, { passive: true });
+          queueSceneDrift();
+        }
+      }
 
       function resetPaper() {
         window.cancelAnimationFrame(animationFrame);
@@ -198,7 +273,7 @@
           motionToggle.disabled = reducedMotion.matches;
           motionToggle.title = reducedMotion.matches
             ? "Effects are paused by your device's reduced motion preference."
-            : "Pause or resume the paper, lighting and bat effects.";
+            : "Pause or resume the paper, lighting, bats and cinematic motion.";
         }
         frontEdition.removeEventListener("pointermove", updatePaper);
         frontEdition.removeEventListener("pointerleave", resetPaper);
@@ -209,6 +284,7 @@
           frontEdition.addEventListener("pointerleave", resetPaper);
           frontEdition.addEventListener("pointercancel", resetPaper);
         }
+        configureNightEffects(paused);
       }
 
       motionToggle?.addEventListener("click", () => {

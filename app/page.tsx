@@ -5,7 +5,7 @@ const github = 'https://github.com/Omoshiroii';
 const linkedin = 'https://www.linkedin.com/in/taha-zerrad-a9601a241/';
 
 function Bat({ className = '' }: { className?: string }) {
-  return <svg className={className} viewBox="0 0 120 52" fill="currentColor" aria-hidden="true"><path d="M2 4C17 14 22 13 34 10L32 25L49 21L54 7L59 15H63L68 7L72 22L88 25L86 10C99 14 106 12 118 4C111 19 108 25 112 36C94 27 84 31 78 42C68 34 64 39 60 51C56 39 52 34 42 42C35 31 26 27 8 36C12 25 9 18 2 4Z" /></svg>;
+  return <svg className={'bat-mark ' + className} viewBox="0 0 1040 320" fill="currentColor" aria-hidden="true" focusable="false"><path d="M0 0H354C353 50 389 86 434 87C451 87 468 81 479 74L495 13L498 54C511 44 529 44 542 54L545 13L561 74C572 81 589 87 606 87C651 86 687 50 686 0H1040C951 2 869 63 856 143C853 163 853 182 854 198C738 170 607 204 520 320C433 204 302 170 186 198C187 182 187 163 184 143C171 63 89 2 0 0Z" /></svg>;
 }
 function Arrow() { return <span aria-hidden="true">↗</span>; }
 
@@ -41,7 +41,8 @@ export default function Home() {
     <>
       <a className="skip-link" href="#main-content">Skip to the front page</a>
       <div className="desk-label" aria-hidden="true"><span>THE INDEPENDENT PORTFOLIO OF TAHA ZERRAD</span><span>DESIGNED AFTER DARK. BUILT WITH PURPOSE.</span></div>
-      <main className="newspaper" id="main-content">
+      <main className="portfolio" id="main-content">
+        <div className="newspaper">
         <div className="front-edition" id="home" data-nav-section>
         <div className="paper-wear" aria-hidden="true" />
         <header className="masthead-header">
@@ -54,13 +55,18 @@ export default function Home() {
         <div className="nav-wrap">
           <button className="menu-toggle" type="button" data-menu-toggle aria-controls="edition-nav" aria-expanded="false">EXPLORE THE EDITION <span aria-hidden="true">☰</span></button>
           <nav className="edition-nav" id="edition-nav" aria-label="Main navigation">
-            <a href="#home" data-section-link aria-current="location">Front page</a><a href="#about" data-section-link>The story</a><a href="#work" data-section-link>Selected work</a><a href="#skills" data-section-link>The arsenal</a><a href="#contact" data-section-link>Send a signal <Arrow /></a>
+            <a href="#home" data-section-link aria-current="location">Home</a><a href="#work" data-section-link>Projects</a><a href="#about" data-section-link>About me</a><a href="#skills" data-section-link>Skills</a><a href="#contact" data-section-link>Contact <Arrow /></a>
           </nav>
         </div>
 
         <section className="front-page" aria-labelledby="hero-title">
           <div className="front-page-kicker"><span><i className="red-square" /> SPECIAL REPORT / A CITY ON THE EDGE</span><span>FEAR. OBSESSION. THE WILL TO BUILD.</span></div>
           <h1 className="hero-title" id="hero-title"><svg className="hero-wordmark" viewBox="0 0 1200 215" preserveAspectRatio="none" aria-hidden="true"><defs><pattern id="headline-ink" patternUnits="userSpaceOnUse" width="1200" height="215"><rect width="1200" height="215" fill="#171916" /><image href="public/assets/gotham-edition.jpeg" width="1200" height="1680" y="-267" opacity=".7" /><rect width="1200" height="215" fill="#171916" opacity=".25" /></pattern></defs><text x="4" y="210" textLength="1192" lengthAdjust="spacingAndGlyphs" fill="url(#headline-ink)">TAHA ZERRAD</text></svg><span className="sr-only">Taha Zerrad — The Gotham Times engineering portfolio</span></h1>
+          <div className="hero-intro-bar">
+            <p><strong>Engineering student. Building with purpose.</strong><span>Software, data &amp; a restless curiosity.</span></p>
+            <div className="hero-actions"><a className="button button-red" href="#work">VIEW PROJECTS <Arrow /></a><a className="button button-outline" href="#contact">GET IN TOUCH <Arrow /></a></div>
+          </div>
+          <div className="front-visual">
           <div className="headline-banner"><span>WILL THE DARK KNIGHT RISE TONIGHT?</span><Bat /></div>
           <div className="hero-scene">
             <aside className="joker-poster" aria-label="Gotham Theater Joker poster">
@@ -77,22 +83,23 @@ export default function Home() {
               <figcaption><span>THE CITY SLEEPS. THE WORK DOESN’T.</span><span>PHOTOGRAPH FROM THE GOTHAM ARCHIVE</span></figcaption>
             </figure>
           </div>
+          <JokerGraffiti />
+          </div>
           <div className="front-columns">
             <article className="identity-column">
               <p className="panel-label">BEHIND THE MASK / THE DEVELOPER</p><h2>TAHA ZERRAD.</h2>
               <p className="article-byline">Engineering student. Builder after dark.</p>
-              <p className="drop-cap">Every city has a story. This one is mine. I’m Taha, an engineering student turning stubborn curiosity into software. My tools are code, a restless mind, and the willingness to start again.</p>
-              <a className="ink-button" href="#work">EXAMINE THE WORK <Arrow /></a>
+              <p className="drop-cap">I’m Taha, an engineering student building a foundation in software while exploring AI, data and cloud. This is where the experiments, late nights, and lessons become projects.</p>
+              <a className="ink-button" href="#about">MORE ABOUT ME <Arrow /></a>
             </article>
             <article className="dispatch-column">
               <p className="panel-label">DISPATCH 01 / THE ORIGIN</p><h3>No cape.<br />Just conviction.</h3>
-              <p>It started with HTML, CSS, and a need to understand the machinery behind the screen. A diploma in full-stack development followed. Now, Computer Engineering and Networks is the next chapter.</p>
-              <p>Some nights are spent chasing a bug. Others, chasing an idea. Both are part of the story.</p><a className="article-link" href="#about">CONTINUED ON PAGE 02 <Arrow /></a>
+              <p>A foundation in full-stack development. A new chapter in Computer Engineering and Networks. I’m learning how to turn complex problems into software people can use.</p><a className="article-link" href="#about">READ MY STORY <Arrow /></a>
             </article>
             <article className="dispatch-column case-column">
               <p className="panel-label">DISPATCH 02 / THE EVIDENCE</p><h3>The work leaves<br />a paper trail.</h3>
-              <p>A cinema experience built with a team in three weeks. Data experiments that find the story inside the numbers. Small first builds that became the foundation for something bigger.</p>
-              <div className="mini-classified"><span>OPEN THE CASE FILES</span><a href="#work">01 / CINEPHORIA <Arrow /></a><a href="#work">02 / DATA EXPLORATION <Arrow /></a><a href="#work">03 / THE FIRST BUILD <Arrow /></a></div>
+              <p>A cinema experience built with a team. Data experiments that uncover patterns. The first small builds that made the fundamentals click. Each project has a story.</p>
+              <div className="mini-classified"><span>CINEPHORIA · DATA · FIRST BUILDS</span><a href="#work">EXPLORE ALL 3 PROJECTS <Arrow /></a></div>
             </article>
             <aside className="classified-column">
               <blockquote className="joker-quote"><strong>“PUT A SMILE<br />ON THAT FACE.”</strong><cite>— JOKER</cite></blockquote>
@@ -102,21 +109,19 @@ export default function Home() {
           </div>
           <div className="hero-ribbon"><span>THE NIGHT IS DARKEST JUST BEFORE THE DAWN.</span><a href="#about">TURN THE PAGE ↓</a></div>
         </section>
-        <JokerGraffiti />
         </div>
         <div className="edition-controls"><span><i /> LIVE FROM THE NIGHT SHIFT · TAHA ZERRAD</span><button className="motion-toggle" type="button" aria-pressed="false">PAUSE EFFECTS</button><span>THE STORY CONTINUES BELOW ↓</span></div>
+        </div>
 
-        <section className="story-section paper-section" id="about" data-nav-section aria-labelledby="story-heading">
-          <div className="section-heading"><span className="section-label">02 / THE ORIGIN STORY</span><span className="section-rule" /><span className="section-aside">EVERY HERO STARTS SOMEWHERE.</span></div>
-          <div className="story-layout">
-            <div className="story-portrait"><div className="portrait-frame"><img src="public/assets/portrait.png" alt="Portrait of Taha Zerrad" width="600" height="700" loading="lazy" /><span className="photo-label">THE MAN BEHIND THE KEYBOARD</span></div><span className="handwritten portrait-note">No superpowers.<br />Just persistence.</span></div>
-            <article className="story-copy"><p className="eyebrow">PROFILE / TAHA ZERRAD</p><h2 id="story-heading">An ordinary student.<br /><em>An extraordinary appetite.</em></h2><div className="story-columns"><p className="drop-cap">I didn’t start with all the answers. I started with HTML, CSS and a stubborn need to understand how things work. At OFPPT–ISMO, that curiosity became a diploma in web development.</p><p>Now, I’m studying Computer Engineering and Networks. I’m building a stronger foundation in software while exploring the worlds of artificial intelligence, data and cloud computing. The goal is simple: keep learning until I can build things that matter.</p></div><blockquote>“The work is the story.<br />Make it worth reading.”</blockquote><a href={github} target="_blank" rel="noreferrer" className="text-link">FOLLOW THE JOURNEY ON GITHUB <Arrow /></a></article>
-            <aside className="timeline"><h3>THE MAKING OF A BUILDER</h3><ol><li><span>2023 — 2025</span><h4>The foundations</h4><p>Web Development / Fullstack<br />OFPPT–ISMO</p></li><li><span>2025 — PRESENT</span><h4>A bigger mission</h4><p>Computer Engineering<br />&amp; Networks</p></li><li><span>THE ROAD TO 2028</span><h4>Beyond the familiar</h4><p>Growing toward AI, data engineering and cloud systems.</p></li></ol><div className="timeline-stamp">WORK IN<br />PROGRESS</div></aside>
+        <div className="night-edition">
+          <div className="night-opening">
+            <div className="night-opening-copy"><p className="eyebrow">AFTER THE FRONT PAGE</p><h2>Beyond the headlines.</h2><p>The projects, the process, and the person behind the code.</p><a className="text-link" href="#work">EXPLORE THE PROJECTS <Arrow /></a></div>
+            <div className="night-opening-art" aria-hidden="true"><div className="night-city-photo" /><div className="night-signal"><Bat /></div></div>
           </div>
-        </section>
 
         <section className="work-section paper-section" id="work" data-nav-section aria-labelledby="work-heading">
-          <div className="section-heading"><span className="section-label">03 / EVIDENCE OF WORK</span><span className="section-rule" /><span className="section-aside">IDEAS ARE EASY. BUILDING IS THE STORY.</span></div>
+          <div className="section-heading"><span className="section-label">02 / EVIDENCE OF WORK</span><span className="section-rule" /><span className="section-aside">IDEAS ARE EASY. BUILDING IS THE STORY.</span></div>
+          <div className="night-feature-banner"><svg className="night-feature-photo" viewBox="218 262 326 390" preserveAspectRatio="xMidYMin slice" aria-hidden="true"><image href="public/assets/gotham-gazette.jpeg" width="735" height="1104" /></svg><div className="night-feature-copy"><p className="eyebrow">CASE FILES / SELECTED WORK</p><h3>Built after dark.</h3><p>Three projects. Real lessons. More on the way.</p></div><Bat /></div>
           <div className="work-heading-row"><h2 className="section-title" id="work-heading">The work speaks.</h2><div className="project-filters" role="group" aria-label="Filter projects"><button type="button" data-filter="all" aria-pressed="true">ALL STORIES</button><button type="button" data-filter="web" aria-pressed="false">WEB</button><button type="button" data-filter="data" aria-pressed="false">DATA</button></div></div>
           <div className="projects-grid">
             {projects.map(project => <article className={'project-card project-' + project.id} key={project.id} data-project-category={project.category}>
@@ -124,22 +129,32 @@ export default function Home() {
                 {project.image ? <img src={'public/assets/' + project.image} alt={project.alt} loading="lazy" width="600" height="400" /> : <div className="data-art" aria-hidden="true"><span>FIELD NOTES / DATA LAB</span><div className="data-bars">{[32, 48, 41, 67, 55, 83, 72, 96].map((height, i) => <i key={i} style={{ height: height + '%' }} />)}</div><strong>BEHIND EVERY NUMBER,<br />THERE’S A STORY.</strong><small>AN EXPLORATION IN PYTHON</small></div>}
                 <span className="project-number">EXHIBIT {project.number}</span><span className="project-open" aria-hidden="true">↗</span>
               </button>
-              <p className="eyebrow">{project.label}</p><h3><button type="button" data-open-case={project.id}>{project.title}</button></h3><p className="project-description">{project.description}</p><div className="project-meta"><span>{project.tags}</span><button type="button" data-open-case={project.id} aria-label={'Details for ' + project.title}><Arrow /></button></div>
+              <p className="eyebrow">{project.label}</p><h3><button type="button" data-open-case={project.id}>{project.title}</button></h3><p className="project-description">{project.description}</p><div className="project-meta"><span>{project.tags}</span><button type="button" data-open-case={project.id} aria-label={'View project: ' + project.title}>VIEW PROJECT <Arrow /></button></div>
             </article>)}
           </div>
           <div className="work-footer"><span data-filter-status role="status" aria-live="polite">3 stories in this edition</span><a className="text-link" href={github} target="_blank" rel="noreferrer">MORE FROM THE LAB ON GITHUB <Arrow /></a></div>
+        </section>
+
+        <section className="story-section paper-section" id="about" data-nav-section aria-labelledby="story-heading">
+          <div className="section-heading"><span className="section-label">03 / THE ORIGIN STORY</span><span className="section-rule" /><span className="section-aside">EVERY HERO STARTS SOMEWHERE.</span></div>
+          <div className="story-layout">
+            <div className="story-portrait"><div className="portrait-frame"><img src="public/assets/portrait.png" alt="Portrait of Taha Zerrad" width="600" height="700" loading="lazy" /><span className="photo-label">THE MAN BEHIND THE KEYBOARD</span></div><span className="handwritten portrait-note">No superpowers.<br />Just persistence.</span></div>
+            <article className="story-copy"><p className="eyebrow">PROFILE / TAHA ZERRAD</p><h2 id="story-heading">An ordinary student.<br /><em>An extraordinary appetite.</em></h2><div className="story-columns"><p className="drop-cap">I didn’t start with all the answers. I started with HTML, CSS and a stubborn need to understand how things work. At OFPPT–ISMO, that curiosity became a diploma in web development.</p><p>Now, I’m studying Computer Engineering and Networks. I’m building a stronger foundation in software while exploring the worlds of artificial intelligence, data and cloud computing. The goal is simple: keep learning until I can build things that matter.</p></div><blockquote>“The work is the story.<br />Make it worth reading.”</blockquote><a href={github} target="_blank" rel="noreferrer" className="text-link">FOLLOW THE JOURNEY ON GITHUB <Arrow /></a></article>
+            <aside className="timeline"><h3>THE MAKING OF A BUILDER</h3><ol><li><span>2023 — 2025</span><h4>The foundations</h4><p>Web Development / Fullstack<br />OFPPT–ISMO</p></li><li><span>2025 — PRESENT</span><h4>A bigger mission</h4><p>Computer Engineering<br />&amp; Networks</p></li><li><span>THE ROAD TO 2028</span><h4>Beyond the familiar</h4><p>Growing toward AI, data engineering and cloud systems.</p></li></ol><div className="timeline-stamp">WORK IN<br />PROGRESS</div></aside>
+          </div>
         </section>
 
         <section className="skills-section paper-section" id="skills" data-nav-section aria-labelledby="skills-heading">
           <div className="section-heading"><span className="section-label">04 / THE ARSENAL</span><span className="section-rule" /><span className="section-aside">NO GADGET BELT. JUST THE RIGHT TOOLS.</span></div>
           <div className="skills-heading"><h2 className="section-title" id="skills-heading">Curiosity, fully equipped.</h2><p>The tools I build with, the systems I’m exploring,<br />and the things that keep me up past midnight.</p></div>
           <div className="skills-grid"><article><span className="skill-number">I.</span><h3>Build the experience.</h3><p>A foundation in web development.<br />Turning ideas into working interfaces.</p><ul><li>JavaScript</li><li>React</li><li>HTML &amp; CSS</li><li>PHP</li><li>Laravel</li><li>Node.js</li></ul><span className="skill-status">THE FOUNDATION</span></article><article><span className="skill-number">II.</span><h3>Connect the dots.</h3><p>Exploring the patterns behind the data.<br />Learning to ask better questions.</p><ul><li>Python</li><li>SQL</li><li>MongoDB</li><li>Pandas</li><li>AI / ML fundamentals</li></ul><span className="skill-status">THE EXPLORATION</span></article><article><span className="skill-number">III.</span><h3>Think beyond the screen.</h3><p>Understanding how systems fit together.<br />Building stronger engineering habits.</p><ul><li>Git &amp; GitHub</li><li>Linux</li><li>Docker</li><li>Java</li><li>C++</li><li>Cloud fundamentals</li></ul><span className="skill-status">THE NEXT FRONTIER</span></article></div>
-          <div className="editor-note"><span>EDITOR’S NOTE</span><p>These are tools in a growing toolkit. Mastery is the mission, not a claim.</p><Bat /></div>
+          <div className="editor-note"><div className="night-joker-photo" role="img" aria-label="The Joker, in a distressed monochrome Gotham portrait" /><div className="editor-note-copy"><span>DISCIPLINE MEETS A LITTLE CHAOS.</span><p>These are tools in a growing toolkit. Mastery is the mission, not a claim.</p></div><Bat /></div>
         </section>
 
         <section className="contact-section" id="contact" data-nav-section aria-labelledby="contact-heading"><div className="contact-copy"><p className="eyebrow">05 / THE SIGNAL IS OPEN</p><h2 id="contact-heading">GOT A <em>MISSION?</em></h2><p>A project, an idea, or a good conversation.<br />Every great collaboration starts with a signal.</p><div className="contact-links"><a className="button button-paper" href={linkedin} target="_blank" rel="noreferrer">LET’S CONNECT <Arrow /></a><a className="contact-github" href={github} target="_blank" rel="noreferrer">FIND ME ON GITHUB <Arrow /></a></div></div><div className="signal-art" aria-hidden="true"><div className="signal-circle"><Bat /></div><span className="handwritten">Your move.</span></div></section>
         <footer className="paper-footer"><a href="#home" className="footer-brand">The Gotham Times</a><p>© <span data-year>2026</span> TAHA ZERRAD. STILL WRITING THE STORY.</p><button type="button" data-print-edition>PRINT THIS EDITION <span aria-hidden="true">↗</span></button><a href="#home" aria-label="Back to top" className="back-top">↑</a></footer>
         <div className="closing-line">THE NIGHT IS DARKEST JUST BEFORE THE DAWN.</div>
+        </div>
       </main>
       <div className="desk-footer"><span>END OF THIS EDITION. NOT THE STORY.</span><Bat /><span>CRAFTED WITH CURIOSITY &amp; A LITTLE OBSESSION.</span></div>
 
@@ -148,4 +163,3 @@ export default function Home() {
     </>
   );
 }
-

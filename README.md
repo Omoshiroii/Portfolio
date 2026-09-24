@@ -35,6 +35,7 @@ The existing GitHub Actions workflow publishes the repository's static files on 
 
 - `app/page.tsx` is the shared content and markup source. Edit this file, then regenerate the static edition; avoid editing `index.html` directly.
 - `style.css` contains the shared design. `app/globals.css` imports it for Next.js.
+- `styles/night.css` styles the dark portfolio below the newspaper hero; `styles/sections.css` provides the shared section layouts.
 - `public/newspaper.js` contains browser interactions for both editions.
 - `public/assets/` holds images and fonts. The page uses relative `public/assets/` paths; the Next.js configuration maps those paths to its public assets.
 - `scripts/export-static.cjs` compiles the page in memory with the installed TypeScript compiler and renders it with React. It writes only `index.html`; CSS and assets remain shared.
@@ -44,3 +45,5 @@ The shared page is a synchronous server component. Keep browser behavior in `pub
 The masthead prefers Engravers' Old English BT when it is installed on the viewer's device, followed by Old English Text MT and the bundled open-source UnifrakturCook. The exact Engravers face is not included in this repository; a licensed webfont is needed to make it consistent across devices. Barlow Condensed and DM Sans support the headlines and labels. Bundled font licenses are included in `public/assets/fonts/`.
 
 The front edition uses the supplied Gotham newspaper artwork in SVG viewports for the headline texture and photograph. Gray paper, folds, scratches, crimson handwriting, and compact article columns are styled in `style.css`; `public/assets/press-distress.svg` supplies the surface wear. Pointer movement gently tilts the sheet and shifts the photograph and light. The effects control pauses motion, and device reduced-motion preferences are respected automatically. Artwork and portfolio images come from the supplied references and existing project assets.
+
+The newspaper is confined to the hero. Below it, projects lead a dark portfolio with charcoal panels, steel-gray typography, crimson actions, and Batman/Joker imagery. Sections reveal as they enter the viewport; the project banner has restrained scroll depth and the bat signal sweeps slowly. All content remains available without JavaScript and with reduced motion enabled. The shared `Bat` component in `app/page.tsx` supplies the same scalable silhouette throughout the site.
