@@ -2,7 +2,7 @@
   "name": "portfolio-gotham-news",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node scripts/prepare-dev.cjs && next dev",
     "build": "node scripts/export-static.cjs && next build",
     "sync:static": "node scripts/export-static.cjs",
     "start": "next start",

@@ -6,6 +6,63 @@
     if (root.dataset.newspaperReady === "true") return;
     root.dataset.newspaperReady = "true";
 
+    function useImageFallback(img) {
+      const fallback = img.dataset.imageFallback;
+      if (!fallback) return;
+      delete img.dataset.imageFallback;
+      img.dataset.usedFallback = 'true';
+      img.src = fallback;
+    }
+    // Capture errors before they bubble, including failures after lazy loading.
+    document.addEventListener('error', (event) => {
+      if (event.target instanceof HTMLImageElement) useImageFallback(event.target);
+    }, true);
+    document.querySelectorAll('img[data-image-fallback]').forEach(img => {
+      if (img.complete && !img.naturalWidth) useImageFallback(img);
+    });
+
+    document.querySelectorAll('[data-gallery]').forEach(gallery => {
+      const viewport = gallery.querySelector('[data-gallery-viewport]');
+      const slides = [...gallery.querySelectorAll('[data-gallery-slide]')];
+      const dots = [...gallery.querySelectorAll('[data-gallery-index]')];
+      const previous = gallery.querySelector('[data-gallery-prev]');
+      const next = gallery.querySelector('[data-gallery-next]');
+      const status = gallery.querySelector('[data-gallery-status]');
+      let current = 0;
+      let frame = 0;
+      function update() {
+        if (!viewport.clientWidth) return;
+        current = Math.max(0, Math.min(slides.length - 1, Math.round(viewport.scrollLeft / viewport.clientWidth)));
+        previous.disabled = current === 0;
+        next.disabled = current === slides.length - 1;
+        status.textContent = `${current + 1} / ${slides.length}`;
+        dots.forEach((dot, index) => dot.setAttribute('aria-pressed', String(index === current)));
+        // Offscreen links should not draw keyboard focus out of the active slide.
+        slides.forEach((slide, index) => { slide.inert = index !== current; });
+      }
+      function goTo(index) {
+        const target = Math.max(0, Math.min(slides.length - 1, index));
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches || document.body.classList.contains('effects-paused');
+        viewport.scrollTo({ left: target * viewport.clientWidth, behavior: reduced ? 'instant' : 'smooth' });
+      }
+      previous.addEventListener('click', () => goTo(current - 1));
+      next.addEventListener('click', () => goTo(current + 1));
+      dots.forEach((dot, index) => dot.addEventListener('click', () => goTo(index)));
+      viewport.addEventListener('keydown', event => {
+        if (event.target !== viewport) return;
+        const target = { ArrowLeft: current - 1, ArrowRight: current + 1, Home: 0, End: slides.length - 1 }[event.key];
+        if (target === undefined) return;
+        event.preventDefault();
+        goTo(target);
+      });
+      viewport.addEventListener('scroll', () => {
+        if (frame) return;
+        frame = requestAnimationFrame(() => { frame = 0; update(); });
+      }, { passive: true });
+      if ('ResizeObserver' in window) new ResizeObserver(update).observe(viewport);
+      update();
+    });
+
     const navigation = document.getElementById("edition-nav");
     const menuToggle = document.querySelector("[data-menu-toggle]");
     const sectionLinks = [...document.querySelectorAll("[data-section-link]")];
@@ -63,7 +120,7 @@
     function filterProjects(filter) {
       let visibleCount = 0;
       projects.forEach((project) => {
-        const isVisible = filter === "all" || project.dataset.projectCategory === filter;
+        const isVisible = filter === "all" || project.dataset.projectCategory === filter || (filter === "contributions" && project.dataset.contribution === "true");
         project.hidden = !isVisible;
         // An explicit display value also respects filtering if a card uses display: grid.
         if (isVisible) project.style.removeProperty("display");

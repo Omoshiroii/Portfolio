@@ -17,7 +17,7 @@ function JokerGraffiti() {
         <filter id="rough-ink"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="3" result="noise" /><feDisplacementMap in="SourceGraphic" in2="noise" scale="3" /></filter>
       </defs>
       <g filter="url(#rough-ink)">
-        <text><textPath href="#smile-baseline" startOffset="50%" textAnchor="middle">WHY SO SERIOUS?</textPath></text>
+        <text textLength="690" lengthAdjust="spacingAndGlyphs"><textPath href="#smile-baseline" startOffset="50%" textAnchor="middle">WHY SO SERIOUS?</textPath></text>
         <path className="smile-stroke" d="M30 95 Q335 357 770 95 M49 126 Q370 338 750 132 M30 96 L56 158 M770 95 L744 159" />
         <path className="ink-drips" d="M181 221l-5 34m86-9-2 43m372-62 5 36m49-61 3 22" />
       </g>
@@ -30,17 +30,64 @@ function JokerGraffiti() {
   </div>;
 }
 
-const projects = [
-  { id: 'cinephoria', category: 'web', number: '01', label: 'WEB DEVELOPMENT', title: 'Cinephoria', description: 'Three weeks. One team. A cinema experience brought to life with code.', tags: 'PHP / MYSQL / JAVASCRIPT', image: 'cinephoria.jpeg', alt: 'Cinephoria cinema website with film listings' },
-  { id: 'dashboard', category: 'data', number: '02', label: 'DATA EXPLORATION', title: 'Making data speak.', description: 'Finding the story inside the numbers. An exploration of Python and visual analytics.', tags: 'PYTHON / PANDAS / PLOTLY', image: '', alt: '' },
-  { id: 'calculator', category: 'web', number: '03', label: 'THE FIRST CHAPTER', title: 'Small build. Big start.', description: 'The humble calculator that turned curiosity into something I could actually use.', tags: 'HTML / CSS / JAVASCRIPT', image: 'calculator.png', alt: 'Calculator project with number pad and a display' },
+type Project = {
+  id: string; category: 'web' | 'data' | 'systems'; number: string;
+  label: string; title: string; description: string; tags: string;
+  image: string; alt: string; details: string;
+  gallery?: { image: string; caption: string }[]; fallback?: string;
+  repo?: string; live?: string; contribution?: boolean; privateRepo?: boolean;
+};
+
+// Add a filename from public/assets/ to `image` when a screenshot is ready.
+// Keep missing images empty: ProjectPreview renders an intentional image space.
+const projects: Project[] = [
+  { id: 'lilook', category: 'web', number: '01', label: 'JEWELRY SHOP', title: 'LILOOK', description: 'A jewelry storefront built for a client, from the collection to the shopping experience.', tags: 'NEXT.JS / REACT / EXPRESS / MONGODB', image: 'lilook.png', alt: 'LILOOK jewelry storefront with its collection and pink accents', details: 'A full-stack jewelry catalogue and storefront. Explore the live experience or browse the source code.', repo: 'https://github.com/Omoshiroii/jewelry-shop', live: 'https://lilook.vercel.app' },
+  { id: 'adsum', category: 'data', number: '02', label: 'AI / ATTENDANCE', title: 'ADSUM', description: 'Contributed to a real-time attendance system using facial recognition.', tags: 'PYTHON / OPENCV / INSIGHTFACE / ONNX', image: 'projects/adsum.png', alt: 'ADSUM attendance command deck', details: 'My contribution included GPU-aware inference and a persistent worker with vectorized embedding matching, keeping AI processing separate from the interface.', repo: 'https://github.com/H4zeyaf/Adsum-B', contribution: true, privateRepo: true },
+  { id: 'campus', category: 'systems', number: '03', label: 'SCHOOL MANAGEMENT', title: 'Campus des Nobles', description: 'A school management system developed in C++.', tags: 'C++', image: 'projects/campus.png', alt: 'Campus des Nobles school management console', details: 'An application for school management, built as a C++ project. The repository contains the implementation.', repo: 'https://github.com/Omoshiroii/Campus-des-Nobles' },
+  { id: 'task-manager', category: 'web', number: '04', label: 'EVERYDAY TOOLS', title: 'Task Manager', description: 'A personal task manager for organizing work and tracking progress.', tags: 'HTML / CSS / JAVASCRIPT', image: 'projects/taskmngr.png', alt: 'Task Manager planner with task filters and progress', details: 'A practical project to strengthen web development fundamentals while building a tool I can use myself.', repo: 'https://github.com/Omoshiroii/Task-Manager-App', live: 'https://omoshiroii.github.io/Task-Manager-App/' },
+  { id: 'library', category: 'web', number: '05', label: 'LARAVEL APPLICATION', title: 'Library', description: 'A library project built with Laravel.', tags: 'LARAVEL / PHP', image: 'projects/library-primary.jpg', fallback: 'projects/library-backup.jpg', alt: 'Library shelves — illustrative photograph', details: 'A Laravel project focused on a library application. Source access depends on the repository’s visibility.', repo: 'https://github.com/Omoshiroii/library', privateRepo: true },
+  { id: 'emploi', category: 'web', number: '06', label: 'COLLABORATIVE PROJECT', title: 'Projet emploi', description: 'A contribution to the shared projet-emploi project.', tags: 'TEAM PROJECT', image: '', alt: '', details: 'A collaborative project to which I contributed. The linked repository belongs to the project team.', repo: 'https://github.com/H4zeyaf/projet-emploi', contribution: true, privateRepo: true },
+  { id: 'cinephoria', category: 'web', number: '07', label: 'WEB DEVELOPMENT', title: 'Cinephoria', description: 'Three weeks. One team. A cinema experience brought to life with code.', tags: 'PHP / MYSQL / JAVASCRIPT', image: 'cinephoria.jpeg', alt: 'Cinephoria cinema website with film listings', details: 'A three-week team project combining a cinema interface, PHP, and MySQL. A lesson in communication as much as code.' },
+  { id: 'recruitment', category: 'web', number: '08', label: 'INTERNSHIP / TEAM PROJECT', title: 'Recruitment Engine', description: 'An internship application built with colleagues. My focus: the administration dashboard.', tags: 'DASHBOARD / RECRUITMENT / TEAMWORK', image: 'projects/recruitment-home.png', alt: 'Recruitment platform homepage', details: 'Developed during my internship with a few colleagues. I worked on the dashboard, including the administration experience shown here: user management, reported users, job offers, and settings. The gallery also shows the shared application’s public pages and login screen.', live: 'https://recruitment-engine-sand.vercel.app/', contribution: true, gallery: [
+    { image: 'projects/recruitment-users.png', caption: 'Dashboard · User management' },
+    { image: 'projects/recruitment-reports.png', caption: 'Dashboard · Reported users' },
+    { image: 'projects/recruitment-jobs.png', caption: 'Dashboard · Job offers' },
+    { image: 'projects/recruitment-settings.png', caption: 'Dashboard · Settings' },
+    { image: 'projects/recruitment-home.png', caption: 'Team application · Homepage' },
+    { image: 'projects/recruitment-about.png', caption: 'Team application · About page' },
+    { image: 'projects/recruitment-login.png', caption: 'Team application · Login' },
+  ] },
+  { id: 'calculator', category: 'web', number: '09', label: 'THE FIRST CHAPTER', title: 'Small build. Big start.', description: 'The humble calculator that turned curiosity into something I could actually use.', tags: 'HTML / CSS / JAVASCRIPT', image: 'calculator.png', alt: 'Calculator project with number pad and a display', details: 'A first exploration of interfaces, user input, and JavaScript logic.', live: 'https://omoshiroii.github.io/Simple-Calculator/' },
 ];
+
+function ProjectLinks({ project }: { project: Project }) {
+  return <>{project.live && <a className="text-link" href={project.live} target="_blank" rel="noreferrer">LIVE WEBSITE <Arrow /></a>}{project.repo && <a className="text-link" href={project.repo} target="_blank" rel="noreferrer">{project.privateRepo ? 'REPOSITORY (ACCESS LIMITED)' : 'GITHUB REPOSITORY'} <Arrow /></a>}</>;
+}
+
+function ProjectPreview({ project }: { project: Project }) {
+  if (project.image) return <img src={'public/assets/' + project.image} alt={project.alt} loading="lazy" width="600" height="400" data-image-fallback={project.fallback ? "public/assets/" + project.fallback : undefined} />;
+
+  return <div className="project-placeholder" aria-hidden="true"><span className="placeholder-frame">＋</span><strong>{project.title}</strong><span>PROJECT PREVIEW</span><small>Images coming soon</small></div>;
+}
+
+function ProjectGallery({ project, context }: { project: Project; context: string }) {
+  const gallery = project.gallery || [];
+  const id = 'gallery-' + context + '-' + project.id;
+  return <div className="project-gallery" data-gallery role="region" aria-label="Project screenshot gallery">
+    <div className="gallery-viewport" id={id} data-gallery-viewport tabIndex={0} aria-label="Swipe or use arrow keys to browse screenshots">
+      {gallery.map((slide, index) => <figure className="gallery-slide" key={slide.image} data-gallery-slide><img src={'public/assets/' + slide.image} alt={slide.caption} loading="lazy" width="1867" height="875" /><figcaption><span>{slide.caption}</span><a href={'public/assets/' + slide.image} target="_blank" rel="noreferrer">OPEN FULL IMAGE <Arrow /></a></figcaption></figure>)}
+    </div>
+    <div className="gallery-controls"><button type="button" data-gallery-prev aria-controls={id} aria-label="Previous screenshot">←</button><span data-gallery-status aria-live="polite" aria-atomic="true">1 / {gallery.length}</span><button type="button" data-gallery-next aria-controls={id} aria-label="Next screenshot">→</button></div>
+    <div className="gallery-dots" role="group" aria-label="Choose screenshot">{gallery.map((slide,index) => <button type="button" key={slide.image} data-gallery-index={index} aria-controls={id} aria-pressed={index===0} aria-label={slide.caption}>{String(index+1).padStart(2,'0')}</button>)}</div>
+  </div>;
+}
 
 export default function Home() {
   return (
     <>
       <a className="skip-link" href="#main-content">Skip to the front page</a>
       <div className="desk-label" aria-hidden="true"><span>THE INDEPENDENT PORTFOLIO OF TAHA ZERRAD</span><span>DESIGNED AFTER DARK. BUILT WITH PURPOSE.</span></div>
+      <div className="language-bar"><a href="#home" className="language-brand">TZ / PORTFOLIO</a><nav aria-label="Choose language" className="language-switcher"><button type="button" data-language="en" lang="en" aria-pressed="true">English</button><button type="button" data-language="fr" lang="fr" aria-pressed="false">Français</button><button type="button" data-language="es" lang="es" aria-pressed="false">Español</button></nav></div>
       <main className="portfolio" id="main-content">
         <div className="newspaper">
         <div className="front-edition" id="home" data-nav-section>
@@ -98,8 +145,8 @@ export default function Home() {
             </article>
             <article className="dispatch-column case-column">
               <p className="panel-label">DISPATCH 02 / THE EVIDENCE</p><h3>The work leaves<br />a paper trail.</h3>
-              <p>A cinema experience built with a team. Data experiments that uncover patterns. The first small builds that made the fundamentals click. Each project has a story.</p>
-              <div className="mini-classified"><span>CINEPHORIA · DATA · FIRST BUILDS</span><a href="#work">EXPLORE ALL 3 PROJECTS <Arrow /></a></div>
+              <p>A jewelry shop for a client. An internship dashboard built with colleagues. The first small builds that made the fundamentals click. Each project has a story.</p>
+              <div className="mini-classified"><span>LILOOK · INTERNSHIP · FIRST BUILDS</span><a href="#work">EXPLORE ALL PROJECTS <Arrow /></a></div>
             </article>
             <aside className="classified-column">
               <blockquote className="joker-quote"><strong>“PUT A SMILE<br />ON THAT FACE.”</strong><cite>— JOKER</cite></blockquote>
@@ -113,52 +160,54 @@ export default function Home() {
         <div className="edition-controls"><span><i /> LIVE FROM THE NIGHT SHIFT · TAHA ZERRAD</span><button className="motion-toggle" type="button" aria-pressed="false">PAUSE EFFECTS</button><span>THE STORY CONTINUES BELOW ↓</span></div>
         </div>
 
-        <div className="night-edition">
+        <div className="night-edition night-chapters">
           <div className="night-opening">
-            <div className="night-opening-copy"><p className="eyebrow">AFTER THE FRONT PAGE</p><h2>Beyond the headlines.</h2><p>The projects, the process, and the person behind the code.</p><a className="text-link" href="#work">EXPLORE THE PROJECTS <Arrow /></a></div>
-            <div className="night-opening-art" aria-hidden="true"><div className="night-city-photo" /><div className="night-signal"><Bat /></div></div>
+            <div className="skyline-scene" aria-hidden="true"><img src="public/assets/gotham-skyline.svg" alt="" width="1600" height="900" /><div className="skyline-searchlight" /><div className="skyline-mist" /><div className="skyline-bat"><Bat /></div></div>
+            <div className="night-opening-copy"><p className="eyebrow">THE JOURNAL ENDS. THE JOURNEY BEGINS.</p><h2>Behind<br />the mask.</h2><p>I’m Taha. An engineering student in Tangier.<br />Curious by nature. A builder by choice.</p><a className="button button-paper" href="#work">EXPLORE MY WORK <Arrow /></a><span className="scene-coordinate">TANGIER, MOROCCO / 35.76° N</span></div>
+            <a className="scene-scroll" href="#about">MEET THE PERSON <span aria-hidden="true">↓</span></a>
           </div>
+          <nav className="chapter-nav" aria-label="Portfolio chapters"><a href="#work">Projects</a><a href="#about">Behind the mask</a><a href="#journey">Milestones</a><a href="#contact">Contact</a><a className="cv-shortcut" href="public/cv/Taha-Zerrad-CV.pdf" download>DOWNLOAD CV <span aria-hidden="true">↓</span></a></nav>
 
-        <section className="work-section paper-section" id="work" data-nav-section aria-labelledby="work-heading">
-          <div className="section-heading"><span className="section-label">02 / EVIDENCE OF WORK</span><span className="section-rule" /><span className="section-aside">IDEAS ARE EASY. BUILDING IS THE STORY.</span></div>
-          <div className="night-feature-banner"><svg className="night-feature-photo" viewBox="218 262 326 390" preserveAspectRatio="xMidYMin slice" aria-hidden="true"><image href="public/assets/gotham-gazette.jpeg" width="735" height="1104" /></svg><div className="night-feature-copy"><p className="eyebrow">CASE FILES / SELECTED WORK</p><h3>Built after dark.</h3><p>Three projects. Real lessons. More on the way.</p></div><Bat /></div>
-          <div className="work-heading-row"><h2 className="section-title" id="work-heading">The work speaks.</h2><div className="project-filters" role="group" aria-label="Filter projects"><button type="button" data-filter="all" aria-pressed="true">ALL STORIES</button><button type="button" data-filter="web" aria-pressed="false">WEB</button><button type="button" data-filter="data" aria-pressed="false">DATA</button></div></div>
-          <div className="projects-grid">
-            {projects.map(project => <article className={'project-card project-' + project.id} key={project.id} data-project-category={project.category}>
-              <button className="project-visual" type="button" data-open-case={project.id} aria-label={'Read the ' + project.title + ' project story'}>
-                {project.image ? <img src={'public/assets/' + project.image} alt={project.alt} loading="lazy" width="600" height="400" /> : <div className="data-art" aria-hidden="true"><span>FIELD NOTES / DATA LAB</span><div className="data-bars">{[32, 48, 41, 67, 55, 83, 72, 96].map((height, i) => <i key={i} style={{ height: height + '%' }} />)}</div><strong>BEHIND EVERY NUMBER,<br />THERE’S A STORY.</strong><small>AN EXPLORATION IN PYTHON</small></div>}
-                <span className="project-number">EXHIBIT {project.number}</span><span className="project-open" aria-hidden="true">↗</span>
-              </button>
-              <p className="eyebrow">{project.label}</p><h3><button type="button" data-open-case={project.id}>{project.title}</button></h3><p className="project-description">{project.description}</p><div className="project-meta"><span>{project.tags}</span><button type="button" data-open-case={project.id} aria-label={'View project: ' + project.title}>VIEW PROJECT <Arrow /></button></div>
-            </article>)}
-          </div>
-          <div className="work-footer"><span data-filter-status role="status" aria-live="polite">3 stories in this edition</span><a className="text-link" href={github} target="_blank" rel="noreferrer">MORE FROM THE LAB ON GITHUB <Arrow /></a></div>
-        </section>
+          <section className="work-section paper-section" id="work" data-nav-section aria-labelledby="work-heading">
+            <div className="chapter-heading"><p className="eyebrow">01 / SELECTED WORK</p><h2 id="work-heading">Ideas, made real.</h2><p>A few builds from the journey so far.</p></div>
+            <div className="project-filters" role="group" aria-label="Filter projects"><button type="button" data-filter="all" aria-pressed="true">ALL PROJECTS</button><button type="button" data-filter="web" aria-pressed="false">WEB</button><button type="button" data-filter="data" aria-pressed="false">DATA</button><button type="button" data-filter="systems" aria-pressed="false">C++ / SYSTEMS</button><button type="button" data-filter="contributions" aria-pressed="false">CONTRIBUTIONS</button></div>
+            <div className="projects-grid">
+              {projects.map(project => <article className={'project-card project-' + project.id} key={project.id} data-project-category={project.category} data-contribution={project.contribution ? "true" : undefined}>
+                {project.gallery ? <ProjectGallery project={project} context="card" /> : <><button className="project-visual" type="button" data-open-case={project.id} aria-label={'View project: ' + project.title}>
+                  <ProjectPreview project={project} />
+                  <span className="project-number">{project.number}</span><span className="project-open" aria-hidden="true">↗</span>
+                </button></>}
+                <div className="project-summary"><p className="eyebrow">{project.label}</p><h3>{project.title}</h3>{project.contribution && <span className="contribution-badge">CONTRIBUTOR</span>}<p className="project-description">{project.description}</p><p className="project-stack">{project.tags}</p><div className="project-actions"><button type="button" className="button button-outline" data-open-case={project.id}>PROJECT DETAILS <Arrow /></button><ProjectLinks project={project} /></div></div>
+              </article>)}
+            </div>
+            <div className="work-footer"><span data-filter-status role="status" aria-live="polite">9 stories in this edition</span><a className="text-link" href={github} target="_blank" rel="noreferrer">GITHUB PROFILE <Arrow /></a></div>
+          </section>
 
-        <section className="story-section paper-section" id="about" data-nav-section aria-labelledby="story-heading">
-          <div className="section-heading"><span className="section-label">03 / THE ORIGIN STORY</span><span className="section-rule" /><span className="section-aside">EVERY HERO STARTS SOMEWHERE.</span></div>
-          <div className="story-layout">
-            <div className="story-portrait"><div className="portrait-frame"><img src="public/assets/portrait.png" alt="Portrait of Taha Zerrad" width="600" height="700" loading="lazy" /><span className="photo-label">THE MAN BEHIND THE KEYBOARD</span></div><span className="handwritten portrait-note">No superpowers.<br />Just persistence.</span></div>
-            <article className="story-copy"><p className="eyebrow">PROFILE / TAHA ZERRAD</p><h2 id="story-heading">An ordinary student.<br /><em>An extraordinary appetite.</em></h2><div className="story-columns"><p className="drop-cap">I didn’t start with all the answers. I started with HTML, CSS and a stubborn need to understand how things work. At OFPPT–ISMO, that curiosity became a diploma in web development.</p><p>Now, I’m studying Computer Engineering and Networks. I’m building a stronger foundation in software while exploring the worlds of artificial intelligence, data and cloud computing. The goal is simple: keep learning until I can build things that matter.</p></div><blockquote>“The work is the story.<br />Make it worth reading.”</blockquote><a href={github} target="_blank" rel="noreferrer" className="text-link">FOLLOW THE JOURNEY ON GITHUB <Arrow /></a></article>
-            <aside className="timeline"><h3>THE MAKING OF A BUILDER</h3><ol><li><span>2023 — 2025</span><h4>The foundations</h4><p>Web Development / Fullstack<br />OFPPT–ISMO</p></li><li><span>2025 — PRESENT</span><h4>A bigger mission</h4><p>Computer Engineering<br />&amp; Networks</p></li><li><span>THE ROAD TO 2028</span><h4>Beyond the familiar</h4><p>Growing toward AI, data engineering and cloud systems.</p></li></ol><div className="timeline-stamp">WORK IN<br />PROGRESS</div></aside>
-          </div>
-        </section>
+          <section className="personal-section paper-section" id="about" data-nav-section aria-labelledby="story-heading">
+            <div className="personal-image"><img src="public/assets/taha-portrait.jpeg" alt="Portrait of Taha Zerrad" width="390" height="583" loading="lazy" /><span>TAHA ZERRAD / TANGIER</span><Bat /></div>
+            <div className="personal-copy"><p className="eyebrow">02 / BEHIND THE MASK</p><h2 id="story-heading">A person first.<br />A builder, always.</h2><p>I like understanding how things work — then making something of my own. That curiosity took me from full-stack development to Computer Engineering and Networks at EMSI.</p><p>Outside the code, Gotham is my creative world. Inside it: patience, teamwork, and a habit of asking one more question.</p><dl className="personal-facts"><div><dt>BASED IN</dt><dd>Tangier, Morocco</dd></div><div><dt>RIGHT NOW</dt><dd>Engineering student · EMSI</dd></div><div><dt>EXPLORING</dt><dd>AI, data &amp; cloud</dd></div></dl><a className="text-link" href="public/cv/Taha-Zerrad-CV.pdf" download>DOWNLOAD MY CV <span aria-hidden="true">↓</span></a><span className="cv-format">PDF · Original French version</span></div>
+          </section>
 
-        <section className="skills-section paper-section" id="skills" data-nav-section aria-labelledby="skills-heading">
-          <div className="section-heading"><span className="section-label">04 / THE ARSENAL</span><span className="section-rule" /><span className="section-aside">NO GADGET BELT. JUST THE RIGHT TOOLS.</span></div>
-          <div className="skills-heading"><h2 className="section-title" id="skills-heading">Curiosity, fully equipped.</h2><p>The tools I build with, the systems I’m exploring,<br />and the things that keep me up past midnight.</p></div>
-          <div className="skills-grid"><article><span className="skill-number">I.</span><h3>Build the experience.</h3><p>A foundation in web development.<br />Turning ideas into working interfaces.</p><ul><li>JavaScript</li><li>React</li><li>HTML &amp; CSS</li><li>PHP</li><li>Laravel</li><li>Node.js</li></ul><span className="skill-status">THE FOUNDATION</span></article><article><span className="skill-number">II.</span><h3>Connect the dots.</h3><p>Exploring the patterns behind the data.<br />Learning to ask better questions.</p><ul><li>Python</li><li>SQL</li><li>MongoDB</li><li>Pandas</li><li>AI / ML fundamentals</li></ul><span className="skill-status">THE EXPLORATION</span></article><article><span className="skill-number">III.</span><h3>Think beyond the screen.</h3><p>Understanding how systems fit together.<br />Building stronger engineering habits.</p><ul><li>Git &amp; GitHub</li><li>Linux</li><li>Docker</li><li>Java</li><li>C++</li><li>Cloud fundamentals</li></ul><span className="skill-status">THE NEXT FRONTIER</span></article></div>
-          <div className="editor-note"><div className="night-joker-photo" role="img" aria-label="The Joker, in a distressed monochrome Gotham portrait" /><div className="editor-note-copy"><span>DISCIPLINE MEETS A LITTLE CHAOS.</span><p>These are tools in a growing toolkit. Mastery is the mission, not a claim.</p></div><Bat /></div>
-        </section>
+          <section className="journey-section paper-section" id="journey" data-nav-section aria-labelledby="journey-heading">
+            <div className="chapter-heading"><p className="eyebrow">03 / THE MILESTONES</p><h2 id="journey-heading">Every chapter counts.</h2><p>The foundations. The present. What comes next.</p></div>
+            <div className="journey-layout"><div className="journey-art" aria-hidden="true"><svg viewBox="218 262 326 390" preserveAspectRatio="xMidYMin slice"><image href="public/assets/gotham-gazette.jpeg" width="735" height="1104" /></svg><span>THE STORY IS STILL BEING WRITTEN.</span></div><div className="milestones">
+              <details open><summary><span className="milestone-date">2023 — 2025 / PAST</span><strong>Learning to build.</strong><span className="milestone-toggle" aria-hidden="true">+</span></summary><p>Full-stack Web Development diploma at OFPPT–ISMO, Tétouan. The foundations of software, databases, and working as a team.</p></details>
+              <details><summary><span className="milestone-date">APRIL 2025 / EXPERIENCE</span><strong>Code meets the real world.</strong><span className="milestone-toggle" aria-hidden="true">+</span></summary><p>IT internship at SNOP FSD, Tangier. A Laravel application for manufacturing orders, alongside IT support and an introduction to network infrastructure.</p></details>
+              <details><summary><span className="milestone-date">2025 — PRESENT</span><strong>A wider perspective.</strong><span className="milestone-toggle" aria-hidden="true">+</span></summary><p>Computer Engineering and Networks at EMSI, Tangier. Developing stronger engineering foundations while continuing to build practical projects.</p></details>
+              <details><summary><span className="milestone-date">NEXT / FUTURE</span><strong>Keep going further.</strong><span className="milestone-toggle" aria-hidden="true">+</span></summary><p>Explore AI, data engineering, and cloud systems. Find opportunities to learn with a team and turn useful ideas into working products.</p></details>
+            </div></div>
+          </section>
 
-        <section className="contact-section" id="contact" data-nav-section aria-labelledby="contact-heading"><div className="contact-copy"><p className="eyebrow">05 / THE SIGNAL IS OPEN</p><h2 id="contact-heading">GOT A <em>MISSION?</em></h2><p>A project, an idea, or a good conversation.<br />Every great collaboration starts with a signal.</p><div className="contact-links"><a className="button button-paper" href={linkedin} target="_blank" rel="noreferrer">LET’S CONNECT <Arrow /></a><a className="contact-github" href={github} target="_blank" rel="noreferrer">FIND ME ON GITHUB <Arrow /></a></div></div><div className="signal-art" aria-hidden="true"><div className="signal-circle"><Bat /></div><span className="handwritten">Your move.</span></div></section>
-        <footer className="paper-footer"><a href="#home" className="footer-brand">The Gotham Times</a><p>© <span data-year>2026</span> TAHA ZERRAD. STILL WRITING THE STORY.</p><button type="button" data-print-edition>PRINT THIS EDITION <span aria-hidden="true">↗</span></button><a href="#home" aria-label="Back to top" className="back-top">↑</a></footer>
-        <div className="closing-line">THE NIGHT IS DARKEST JUST BEFORE THE DAWN.</div>
+          <section className="toolkit-section paper-section" id="skills" data-nav-section aria-labelledby="skills-heading"><div className="chapter-heading"><p className="eyebrow">04 / THE TOOLKIT</p><h2 id="skills-heading">Tools for the next idea.</h2></div><div className="toolkit-grid"><div><h3>Development</h3><p>JavaScript · PHP · Python · Java · C++</p></div><div><h3>Web &amp; databases</h3><p>React · Next.js · Laravel · MySQL · MongoDB</p></div><div><h3>Growing into</h3><p>Networks · AI · Data · Cloud</p></div></div><div className="quiet-scene"><div className="night-joker-photo" role="img" aria-label="The Joker in a monochrome Gotham portrait" /><p>A little imagination.<br /><strong>A lot of persistence.</strong></p><Bat /></div></section>
+
+          <section className="contact-section" id="contact" data-nav-section aria-labelledby="contact-heading"><div className="contact-copy"><p className="eyebrow">05 / THE NEXT CHAPTER</p><h2 id="contact-heading">Let’s build<br /><em>something.</em></h2><p>Have a project, an opportunity, or a question?<br />I’d like to hear from you.</p><div className="contact-links"><a className="button button-paper" href="mailto:tahazerrad123@gmail.com">SEND AN EMAIL <Arrow /></a><a className="button button-outline" href="public/cv/Taha-Zerrad-CV.pdf" download>DOWNLOAD CV <span aria-hidden="true">↓</span></a></div><div className="social-links"><a href={linkedin} target="_blank" rel="noreferrer">LinkedIn <Arrow /></a><a href={github} target="_blank" rel="noreferrer">GitHub <Arrow /></a><span>PDF · Original French version</span></div></div><div className="signal-art" aria-hidden="true"><div className="signal-circle"><Bat /></div></div></section>
+          <footer className="paper-footer"><a href="#home" className="footer-brand">The Gotham Times</a><p>© <span data-year>2026</span> TAHA ZERRAD</p><a href="#home" className="back-top" aria-label="Back to top">↑</a></footer>
         </div>
       </main>
       <div className="desk-footer"><span>END OF THIS EDITION. NOT THE STORY.</span><Bat /><span>CRAFTED WITH CURIOSITY &amp; A LITTLE OBSESSION.</span></div>
 
-      {projects.map(project => <dialog className="case-dialog" id={'case-' + project.id} key={project.id} aria-labelledby={'case-title-' + project.id}><div className="dialog-top"><span>THE GOTHAM TIMES / EXHIBIT {project.number}</span><button data-close-dialog type="button" aria-label="Close project story">×</button></div><p className="eyebrow">{project.label}</p><h2 id={'case-title-' + project.id}>{project.title}</h2>{project.image && <img className="dialog-image" src={'public/assets/' + project.image} alt={project.alt} loading="lazy" width="600" height="400" />}<div className="dialog-body">{project.id === 'cinephoria' ? <><h3>A team effort, from concept to screen.</h3><p>Cinephoria is a cinema web development project completed with a group in three weeks. It brought PHP, MySQL and JavaScript together in one build, with the challenge of turning an idea into a working experience as a team.</p><p><strong>The lesson:</strong> a good build takes more than code. It takes communication, shared decisions and a willingness to solve problems together.</p></> : project.id === 'dashboard' ? <><h3>Learning to see the bigger picture.</h3><p>A learning project exploring interactive data visualization with Python, Pandas and Plotly. The focus is understanding how data becomes a useful visual story.</p><p><strong>The exploration:</strong> working with data, experimenting with charts and developing the analytical habits that support a future in AI and data engineering.</p><p className="case-note">The newspaper graphic is an editorial illustration of this project.</p></> : <><h3>Every origin story has a first build.</h3><p>A calculator built with HTML, CSS and JavaScript. A small project that made the connection between interface, user input and application logic click.</p><p><strong>The lesson:</strong> simple projects are where the fundamentals become real. Building, testing and improving beats simply reading about it.</p></>}</div><p className="case-tags">{project.tags}</p><div className="dialog-actions">{project.id === 'calculator' && <a className="button button-red" href="https://omoshiroii.github.io/Simple-Calculator/" target="_blank" rel="noreferrer">OPEN LIVE PROJECT <Arrow /></a>}<a className="text-link" href={github} target="_blank" rel="noreferrer">EXPLORE MY GITHUB <Arrow /></a></div></dialog>)}
+      {projects.map(project => <dialog className="case-dialog" id={'case-' + project.id} key={project.id} aria-labelledby={'case-title-' + project.id}><div className="dialog-top"><span>PROJECT / {project.number}</span><button data-close-dialog type="button" aria-label="Close project details">×</button></div><p className="eyebrow">{project.label}</p><h2 id={'case-title-' + project.id}>{project.title}</h2>{project.contribution && <span className="contribution-badge">CONTRIBUTOR</span>}<div className="dialog-preview">{project.gallery ? <ProjectGallery project={project} context="dialog" /> : <ProjectPreview project={project} />}</div><div className="dialog-body"><p>{project.description}</p><p>{project.details}</p>{project.id === "library" && <p className="image-credit">Illustrative library photos: <a href="https://unsplash.com/photos/ggeZ9oyI-PE" target="_blank" rel="noreferrer">Priscilla Du Preez</a> / <a href="https://unsplash.com/photos/f7fsz-4U0PA" target="_blank" rel="noreferrer">Isaac Smith</a> · Unsplash</p>}{project.privateRepo && <p className="repository-note">This repository is not publicly accessible at the moment.</p>}</div><p className="case-tags">{project.tags}</p><div className="dialog-actions"><ProjectLinks project={project} />{!project.repo && !project.live && <a className="text-link" href={github} target="_blank" rel="noreferrer">GITHUB PROFILE <Arrow /></a>}</div></dialog>)}
+      <Script src="public/translations.js" strategy="afterInteractive" />
       <Script src="public/newspaper.js" strategy="afterInteractive" />
     </>
   );

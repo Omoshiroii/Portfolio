@@ -61,6 +61,7 @@ const html = `<!DOCTYPE html>
   <meta name="theme-color" content="#191713">
   <title>Taha Zerrad | The Gotham Times</title>
   <link rel="stylesheet" href="style.css">
+  <script src="public/translations.js" defer></script>
   <script src="public/newspaper.js" defer></script>
 </head>
 <body>${body}</body>
