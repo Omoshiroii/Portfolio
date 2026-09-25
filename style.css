@@ -1,6 +1,7 @@
 @import url('./styles/sections.css');
 @import url('./styles/night.css');
 @import url('./styles/chapters.css');
+@import url('./styles/recruiter.css');
 
 @font-face{font-family:UnifrakturCook;src:url('public/assets/fonts/IurA6Yli8YOdcoky-0PTTdkm56n05Uw1.ttf') format('truetype');font-weight:700;font-display:swap}
 @font-face{font-family:'Barlow Condensed';src:url('public/assets/fonts/HTxwL3I-JCGChYJ8VI-L6OO_au7B46r2_3E.ttf') format('truetype');font-weight:700;font-display:swap}

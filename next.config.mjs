@@ -6,7 +6,7 @@ const nextConfig = (phase) => ({
   distDir: phase === PHASE_DEVELOPMENT_SERVER ? '.next-dev' : '.next-production',
   reactStrictMode: true,
   async rewrites() {
-    return [{ source: '/public/:path*', destination: '/:path*' }];
+    return [{ source: '/public/:path*', destination: '/:path*' }, { source: '/projects.html', destination: '/projects' }, { source: '/index.html', destination: '/' }];
   },
   experimental: {
     typedRoutes: false,

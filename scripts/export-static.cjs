@@ -7,52 +7,29 @@ const React = require('react');
 const { renderToStaticMarkup } = require('react-dom/server');
 
 const root = path.resolve(__dirname, '..');
-const pagePath = path.join(root, 'app', 'page.tsx');
-const source = fs.readFileSync(pagePath, 'utf8');
-const result = ts.transpileModule(source, {
-  fileName: pagePath,
-  reportDiagnostics: true,
-  compilerOptions: {
-    target: ts.ScriptTarget.ES2020,
-    module: ts.ModuleKind.CommonJS,
-    jsx: ts.JsxEmit.ReactJSX,
-    esModuleInterop: true,
-  },
-});
-
-const errors = (result.diagnostics || []).filter(
-  (diagnostic) => diagnostic.category === ts.DiagnosticCategory.Error,
-);
-
-if (errors.length) {
-  const formatHost = {
-    getCanonicalFileName: (fileName) => fileName,
-    getCurrentDirectory: () => root,
-    getNewLine: () => '\n',
+function compile(file) {
+  const source = fs.readFileSync(file, 'utf8');
+  const result = ts.transpileModule(source, { fileName:file, compilerOptions:{ target:ts.ScriptTarget.ES2020, module:ts.ModuleKind.CommonJS, jsx:ts.JsxEmit.ReactJSX, esModuleInterop:true } });
+  const compiled = new Module(file, module);
+  compiled.filename=file;
+  compiled.paths=Module._nodeModulePaths(path.dirname(file));
+  const original=compiled.require.bind(compiled);
+  compiled.require=(specifier)=>{
+    if(specifier==='next/script') return function StaticScript(){return null;};
+    if(specifier.startsWith('.')) {
+      const target=path.resolve(path.dirname(file),specifier);
+      for(const ext of ['.tsx','.ts']) if(fs.existsSync(target+ext)) return compile(target+ext);
+    }
+    return original(specifier);
   };
-  throw new Error(ts.formatDiagnosticsWithColorAndContext(errors, formatHost));
+  compiled._compile(result.outputText,file);
+  return compiled.exports;
 }
-
-// Compile in memory so no generated JavaScript is left alongside the TSX source.
-const pageModule = new Module(pagePath, module);
-pageModule.filename = pagePath;
-pageModule.paths = Module._nodeModulePaths(path.dirname(pagePath));
-const originalRequire = pageModule.require.bind(pageModule);
-pageModule.require = (specifier) => {
-  // The standalone document includes its own deferred browser script below.
-  if (specifier === 'next/script') return function StaticScript() { return null; };
-  return originalRequire(specifier);
-};
-pageModule._compile(result.outputText, pagePath);
-
-const Home = pageModule.exports.default;
-if (typeof Home !== 'function') {
-  throw new Error('app/page.tsx must default-export the Home component.');
-}
-
-const body = renderToStaticMarkup(React.createElement(Home));
+const pages=compile(path.join(root,'components','portfolio.tsx'));
+for(const [name,Page] of [['index.html',pages.default],['projects.html',pages.ProjectArchive]]) {
+const body = renderToStaticMarkup(React.createElement(Page));
 const html = `<!DOCTYPE html>
-<!-- Generated from app/page.tsx by npm run sync:static. -->
+<!-- Generated from components/portfolio.tsx by npm run sync:static. -->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -68,5 +45,6 @@ const html = `<!DOCTYPE html>
 </html>
 `;
 
-fs.writeFileSync(path.join(root, 'index.html'), html, 'utf8');
-console.log('Updated index.html from app/page.tsx.');
+fs.writeFileSync(path.join(root, name), html, 'utf8');
+console.log('Updated '+name+' from components/portfolio.tsx.');
+}

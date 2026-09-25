@@ -6,6 +6,19 @@
     if (root.dataset.newspaperReady === "true") return;
     root.dataset.newspaperReady = "true";
 
+    const panels = [...document.querySelectorAll('[data-reveal]')];
+    if ('IntersectionObserver' in window) {
+      root.classList.add('reveal-ready');
+      const panelObserver = new IntersectionObserver(entries => entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.classList.add('revealed'); panelObserver.unobserve(entry.target); }
+      }), { threshold: .08 });
+      panels.forEach(panel => panelObserver.observe(panel));
+      panels.forEach(panel => panel.addEventListener('focusin', () => panel.classList.add('revealed')));
+      new MutationObserver(() => {
+        if (document.body.classList.contains('effects-paused')) panels.forEach(panel => panel.classList.add('revealed'));
+      }).observe(document.body, { attributes:true, attributeFilter:['class'] });
+    }
+
     function useImageFallback(img) {
       const fallback = img.dataset.imageFallback;
       if (!fallback) return;
