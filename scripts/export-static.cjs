@@ -34,7 +34,7 @@ const html = `<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Taha Zerrad's engineering student portfolio: a Gotham-inspired newspaper of projects, learning, and ideas in software, AI, and data.">
+  <meta name="description" content="Taha Zerrad, fourth-year EMSI engineering student and full-stack developer aspiring to specialize in cybersecurity. Projects, experience, certifications, and CV.">
   <meta name="theme-color" content="#191713">
   <title>Taha Zerrad | The Gotham Times</title>
   <link rel="stylesheet" href="style.css">

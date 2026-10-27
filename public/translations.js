@@ -2,6 +2,33 @@
 (() => {
   'use strict';
   const rows = [
+    ["PERFUME STOREFRONT", "BOUTIQUE DE PARFUMS", "TIENDA DE PERFUMES"],
+    ["A perfume storefront presenting niche and mainstream fragrances through a curated catalogue.", "Une boutique de parfums présentant des fragrances de niche et mainstream dans un catalogue soigné.", "Una tienda de perfumes que presenta fragancias de nicho y mainstream en un catálogo seleccionado."],
+    ["STOREFRONT / PRODUCT CATALOGUE / WEB DESIGN", "BOUTIQUE / CATALOGUE PRODUITS / DESIGN WEB", "TIENDA / CATÁLOGO DE PRODUCTOS / DISEÑO WEB"],
+    ["A perfume website with a catalogue interface organized around fragrance categories and brands. The supplied screens show filters for notes, gender, and price, product favourites, and an olfactory discovery entry point. Explore the live website to view the storefront.", "Un site de parfums avec un catalogue organisé par catégories et marques. Les écrans fournis montrent des filtres par notes, genre et prix, des favoris et un parcours de découverte olfactive. Découvrez la boutique en ligne.", "Un sitio de perfumes con un catálogo organizado por categorías y marcas. Las pantallas muestran filtros por notas, género y precio, favoritos y una entrada al recorrido de descubrimiento olfativo. Explora la tienda en línea."],
+
+    ["Certifications", "Certifications", "Certificaciones"],
+    ["04 / CONTINUING EDUCATION", "04 / FORMATION CONTINUE", "04 / FORMACIÓN CONTINUA"],
+    ["Courses & certifications.", "Cours et certifications.", "Cursos y certificaciones."],
+    ["Continued learning in software engineering, programming, and Unix. View each Coursera credential for verification.", "Formation continue en génie logiciel, programmation et Unix. Consultez chaque certificat Coursera pour le vérifier.", "Formación continua en ingeniería de software, programación y Unix. Consulta cada certificado de Coursera para verificarlo."],
+    ["VERIFY CERTIFICATE", "VÉRIFIER LE CERTIFICAT", "VERIFICAR CERTIFICADO"],
+    ["Education & experience.", "Formation et expérience.", "Formación y experiencia."],
+    ["Fourth-year engineering student at EMSI.", "Élève ingénieur en quatrième année à l’EMSI.", "Estudiante de cuarto año de ingeniería en EMSI."],
+    ["Full-stack developer · Fourth-year EMSI student", "Développeur full-stack · Quatrième année à l’EMSI", "Desarrollador full-stack · Cuarto año en EMSI"],
+    ["Software engineering · Aspiring cybersecurity specialist · Tangier, Morocco", "Génie logiciel · Objectif : cybersécurité · Tanger, Maroc", "Ingeniería de software · Aspirante a especializarse en ciberseguridad · Tánger, Marruecos"],
+    ["Fourth year · EMSI", "Quatrième année · EMSI", "Cuarto año · EMSI"],
+    ["INTERNSHIP / IKSATECH", "STAGE / IKSATECH", "PRÁCTICAS / IKSATECH"],
+    ["Administration interface · Recruitment platform", "Interface d’administration · Plateforme de recrutement", "Interfaz de administración · Plataforma de reclutamiento"],
+    ["VIEW THE PROJECT", "VOIR LE PROJET", "VER EL PROYECTO"],
+    ["Worked with colleagues on a recruitment and AI matching platform at Iksatech. My contribution focused on the administration interface: managing users, reviewing reported users, job offers, and settings.", "Travail en équipe chez Iksatech sur une plateforme de recrutement et de matching IA. Ma contribution portait sur l’interface d’administration : utilisateurs, signalements, offres d’emploi et paramètres.", "Trabajo en equipo en Iksatech en una plataforma de reclutamiento y matching con IA. Mi contribución se centró en la administración: usuarios, reportes, ofertas de empleo y ajustes."],
+    ["Fourth-year Computer Engineering and Networks student at EMSI, Tangier. Full-stack development experience; aspiring to specialize in cybersecurity.", "Élève ingénieur en quatrième année en informatique et réseaux à l’EMSI, Tanger. Expérience en développement full-stack ; objectif de spécialisation en cybersécurité.", "Estudiante de cuarto año de informática y redes en EMSI, Tánger. Experiencia en desarrollo full-stack; aspirante a especializarse en ciberseguridad."],
+    ["Fourth-year EMSI student with a full-stack diploma, client work, and experience developing administration interfaces during an internship.", "Élève ingénieur en quatrième année à l’EMSI, diplômé en full-stack, avec des projets clients et une expérience de développement d’interfaces d’administration en stage.", "Estudiante de cuarto año en EMSI, titulado en full-stack, con proyectos para clientes y experiencia en interfaces de administración durante unas prácticas."],
+    ["Currently in the fourth year of Computer Engineering and Networks at EMSI, Tangier. Aspiring to specialize in cybersecurity while building on practical software development experience.", "Actuellement en quatrième année en informatique et réseaux à l’EMSI, Tanger. Objectif de spécialisation en cybersécurité, en développant une expérience pratique en génie logiciel.", "Actualmente en cuarto año de informática y redes en EMSI, Tánger. Aspiro a especializarme en ciberseguridad mientras desarrollo experiencia práctica en software."],
+    ["Specialize in cybersecurity, deepen my knowledge of secure systems, and contribute to a team through an internship or junior opportunity.", "Me spécialiser en cybersécurité, approfondir mes connaissances des systèmes sécurisés et contribuer à une équipe en stage ou dans un poste junior.", "Especializarme en ciberseguridad, profundizar en sistemas seguros y contribuir a un equipo mediante prácticas o un puesto junior."],
+    ["A web project available to explore online.", "Un projet web à découvrir en ligne.", "Un proyecto web disponible en línea."],
+    ["Explore Muske through the live website.", "Découvrez Muske sur le site en ligne.", "Descubre Muske en el sitio web."],
+    ["WEB PROJECT", "PROJET WEB", "PROYECTO WEB"],
+
     ['01 / WHAT I CAN CONTRIBUTE','01 / CE QUE JE PEUX APPORTER','01 / LO QUE PUEDO APORTAR'],
     ['Full-stack skills.','Compétences full-stack.','Competencias full-stack.'],['Practical experience.','Expérience concrète.','Experiencia práctica.'],
     ['Engineering student at EMSI, Tangier. Seeking a development internship or junior opportunity.','Élève ingénieur à l’EMSI, Tanger. À la recherche d’un stage en développement ou d’une opportunité junior.','Estudiante de ingeniería en EMSI, Tánger. Busco prácticas de desarrollo o una oportunidad junior.'],
