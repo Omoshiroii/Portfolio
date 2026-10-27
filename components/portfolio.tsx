@@ -41,7 +41,7 @@ type Project = {
 // Add a filename from public/assets/ to `image` when a screenshot is ready.
 // Keep missing images empty: ProjectPreview renders an intentional image space.
 const projects: Project[] = [
-  { id: 'muske', category: 'web', number: '10', label: 'PERFUME STOREFRONT', title: 'Muské Privée', description: 'A perfume storefront presenting niche and mainstream fragrances through a curated catalogue.', tags: 'STOREFRONT / PRODUCT CATALOGUE / WEB DESIGN', image: '', alt: '', details: 'A perfume website with a catalogue interface organized around fragrance categories and brands. The supplied screens show filters for notes, gender, and price, product favourites, and an olfactory discovery entry point. Explore the live website to view the storefront.', live: 'https://muske.netlify.app/' },
+  { id: 'muske', category: 'web', number: '10', label: 'PERFUME STOREFRONT', title: 'Muské Privée', description: 'A perfume storefront presenting niche and mainstream fragrances through a curated catalogue.', tags: 'STOREFRONT / PRODUCT CATALOGUE / WEB DESIGN', image: 'projects/muske-home.png', alt: 'Muské Privée perfume storefront with amber fragrance bottle and editorial typography', details: 'A perfume website with a catalogue interface organized around fragrance categories and brands. The supplied screens show filters for notes, gender, and price, product favourites, and an olfactory discovery entry point. Explore the live website to view the storefront.', live: 'https://muske.netlify.app/', gallery: [{ image: 'projects/muske-home.png', caption: 'Muské Privée · Storefront' }, { image: 'projects/muske-discovery.png', caption: 'Muské Privée · Fragrance discovery' }] },
   { id: 'lilook', category: 'web', number: '01', label: 'JEWELRY SHOP', title: 'LILOOK', description: 'A jewelry storefront built for a client, from the collection to the shopping experience.', tags: 'NEXT.JS / REACT / EXPRESS / MONGODB', image: 'lilook.png', alt: 'LILOOK jewelry storefront with its collection and pink accents', details: 'A full-stack jewelry catalogue and storefront. Explore the live experience or browse the source code.', repo: 'https://github.com/Omoshiroii/jewelry-shop', live: 'https://lilook.vercel.app' },
   { id: 'adsum', category: 'data', number: '02', label: 'AI / ATTENDANCE', title: 'ADSUM', description: 'Contributed to a real-time attendance system using facial recognition.', tags: 'PYTHON / OPENCV / INSIGHTFACE / ONNX', image: 'projects/adsum.png', alt: 'ADSUM attendance command deck', details: 'My contribution included GPU-aware inference and a persistent worker with vectorized embedding matching, keeping AI processing separate from the interface.', repo: 'https://github.com/H4zeyaf/Adsum-B', contribution: true, privateRepo: true },
   { id: 'campus', category: 'systems', number: '03', label: 'SCHOOL MANAGEMENT', title: 'Campus des Nobles', description: 'A school management system developed in C++.', tags: 'C++', image: 'projects/campus.png', alt: 'Campus des Nobles school management console', details: 'An application for school management, built as a C++ project. The repository contains the implementation.', repo: 'https://github.com/Omoshiroii/Campus-des-Nobles' },
@@ -83,7 +83,7 @@ function ProjectGallery({ project, context }: { project: Project; context: strin
   </div>;
 }
 
-const featured = ['lilook', 'recruitment', 'adsum'].map(id => projects.find(project => project.id === id)!);
+const featured = ['muske', 'lilook', 'recruitment', 'adsum', 'cinephoria'].map(id => projects.find(project => project.id === id)!);
 function ProjectCard({ project }: { project: Project }) { return <article className={'project-card project-' + project.id} key={project.id} data-project-category={project.category} data-contribution={project.contribution ? "true" : undefined}>
                 <><button className="project-visual" type="button" data-open-case={project.id} aria-label={'View project: ' + project.title}>
                   <ProjectPreview project={project} />
@@ -97,7 +97,30 @@ function TechTape() {
  const tech = [['react','React'],['nextjs','Next.js'],['typescript','TypeScript'],['javascript','JavaScript'],['laravel','Laravel'],['php','PHP'],['python','Python'],['mysql','MySQL'],['mongodb','MongoDB'],['cplusplus','C++'],['git','Git'],['java','Java']];
  return <div className="tech-tape" aria-label="Technologies"><div className="tech-track">{[0,1].map(copy=><div className="tech-group" key={copy} aria-hidden={copy===1 ? true : undefined}>{tech.map(([icon,name])=><span className="tech-item" key={icon}><img src={'public/assets/tech/'+icon+'.svg'} alt="" width="34" height="34" loading="lazy" /><span>{name}</span></span>)}</div>)}</div></div>;
 }
-function BlinkingField() { return <div className="blinking-field" aria-hidden="true">{Array.from({length:240},(_,i)=><i key={i} style={{animationDelay:-(i*1.37%11)+'s',animationDuration:(4+i%7)+'s',opacity:(i*17%11)/18}} />)}</div>; }
+function ProjectStage() {
+  return <div className="project-stage" aria-label="Selected project previews">
+    <div className="stage-orbit" aria-hidden="true" /><div className="stage-orbit orbit-two" aria-hidden="true" />
+    {featured.slice(0, 3).map((project, i) => <button type="button" className={'stage-card stage-card-' + i} data-open-case={project.id} key={project.id} aria-label={'View project: ' + project.title}>
+      <span className="stage-card-bar"><i /><i /><i /><span>{project.title}</span><Arrow /></span>
+      <img src={'public/assets/' + project.image} alt={project.alt} width="600" height="400" loading="lazy" />
+      <span className="stage-card-foot">{project.label}<span>0{i + 1}</span></span>
+    </button>)}
+    <span className="stage-coordinate" aria-hidden="true">DESIGN × CODE × CURIOSITY</span>
+  </div>;
+}
+function ProjectShowcase() {
+  const items = featured.map(({ id, image, alt, title, label }) => ({ id, src: 'public/assets/' + image, alt, title, subtitle: label }));
+  return <div className="project-showcase" data-project-showcase>
+    <div className="showcase-topline"><span><i /> SELECTED WORK / INTERACTIVE EDITION</span><span>01 — 05</span></div>
+    <div className="project-carousel-mount" data-project-carousel data-items={JSON.stringify(items)} />
+    <div className="project-selector" role="group" aria-label="Choose project">{featured.map((project, i) => <button type="button" key={project.id} data-project-index={i} aria-pressed={i === 0}><span>0{i + 1}</span>{project.title}</button>)}</div>
+    <div className="showcase-caption"><span>DRAG TO EXPLORE · CHOOSE A PROJECT</span><div><button type="button" data-project-step="-1" aria-label="Previous project">←</button><span data-project-position aria-live="polite">01 / 05</span><button type="button" data-project-step="1" aria-label="Next project">→</button></div></div>
+    <div className="project-inspector">{featured.map(project => <div className="inspector-panel" data-project-panel={project.id} key={project.id}>
+      <div><p className="eyebrow">{project.label}</p><h3>{project.title}</h3><p className="project-stack">{project.tags}</p></div>
+      <div><p className="project-description">{project.description}</p><div className="project-actions"><button className="button button-outline" type="button" data-open-case={project.id}>PROJECT DETAILS <Arrow /></button><ProjectLinks project={project} /></div></div>
+    </div>)}</div>
+  </div>;
+}
 
 export default function Home() {
   return (
@@ -178,30 +201,38 @@ export default function Home() {
         </div>
 
         <div className="night-edition night-chapters">
+          <div className="after-dark" id="after-dark">
+          <div className="flux-backdrop" aria-hidden="true"><div className="flux-sticky"><div data-flux-lines /></div></div>
           <div className="night-opening">
-            <div className="skyline-scene" aria-hidden="true"><img src="public/assets/gotham-skyline.svg" alt="" width="1600" height="900" /><div className="skyline-searchlight" /><div className="skyline-mist" /><div className="skyline-bat"><Bat /></div></div>
-            <div className="night-opening-copy"><p className="eyebrow">THE JOURNAL ENDS. THE JOURNEY BEGINS.</p><h2>Skills for<br />your next project.</h2><p>Full-stack developer · Fourth-year EMSI student<br />Available for internships and junior opportunities.</p><a className="button button-paper" href="#work">EXPLORE MY WORK <Arrow /></a><span className="scene-coordinate">TANGIER, MOROCCO / 35.76° N</span></div>
-            <a className="scene-scroll" href="#skills">EXPLORE MY SKILLS <span aria-hidden="true">↓</span></a>
+            <div className="night-opening-copy"><p className="eyebrow"><span className="live-dot" /> THE OTHER SIDE OF THE STORY</p><h2>Built after dark.<br /><em>Made to stand out.</em></h2><p>Full-stack developer · Fourth-year EMSI student<br />Software engineering. A future in cybersecurity.</p><a className="button button-paper" href="#work">EXPLORE MY WORK <Arrow /></a><span className="scene-coordinate">TANGIER, MOROCCO / 35.76° N</span></div>
+            <ProjectStage />
+            <a className="scene-scroll" href="#work">STEP INTO THE WORK <span aria-hidden="true">↓</span></a>
           </div>
-          <nav className="chapter-nav" aria-label="Portfolio chapters"><a href="#work">Projects</a><a href="#skills">Skills</a><a href="#about">Experience</a><a href="#certifications">Certifications</a><a href="#contact">Contact</a><a className="cv-shortcut" href="public/cv/Taha-Zerrad-CV.pdf" download>DOWNLOAD CV <span aria-hidden="true">↓</span></a></nav>
+          <div className="chapter-layout">
+          <aside className="chapter-sidebar">
+            <details className="chapter-directory" open><summary><span>EXPLORE THE PORTFOLIO</span><span data-current-chapter>Projects</span><span className="directory-toggle" aria-hidden="true">+</span></summary>
+              <div className="directory-body"><div className="directory-heading"><span className="eyebrow">THE PORTFOLIO INDEX</span><span>01 — 05</span></div>
+              <div data-branched-menu><nav className="menu-fallback" aria-label="Portfolio chapters"><strong>The work</strong><a href="#work">01 / Projects</a><a href="#skills">02 / Skills</a><strong>The background</strong><a href="#about">03 / Experience</a><a href="#certifications">04 / Certifications</a><strong>The next chapter</strong><a href="#contact">05 / Contact</a></nav></div>
+              <a className="directory-cv" href="public/cv/Taha-Zerrad-CV.pdf" download>DOWNLOAD CV <span aria-hidden="true">↓</span></a><button type="button" className="chapter-effects" data-toggle-effects aria-pressed="false">PAUSE EFFECTS</button>
+              </div>
+            </details>
+          </aside>
+          <div className="chapter-content">
 
-          <section className="capability-section paper-section" id="skills" data-nav-section aria-labelledby="skills-heading">
-            <BlinkingField /><div className="chapter-heading" data-reveal="left"><p className="eyebrow">01 / WHAT I CAN CONTRIBUTE</p><h2 id="skills-heading">Full-stack skills.<br />Practical experience.</h2><p>Fourth-year Computer Engineering and Networks student at EMSI, Tangier. Full-stack development experience; aspiring to specialize in cybersecurity.</p></div>
-            <div className="skill-evidence"><a href="#work" data-reveal="left"><span>01 / WEB</span><h3>Build web applications</h3><p>React, Next.js, PHP &amp; Laravel</p><small>Client work · LILOOK storefront</small><Arrow /></a><a href="#work" data-reveal="right"><span>02 / DASHBOARDS</span><h3>Make complex tasks usable</h3><p>Administration interfaces &amp; databases</p><small>Internship · Recruitment Engine</small><Arrow /></a><a href="#work" data-reveal="left"><span>03 / PYTHON</span><h3>Contribute to AI systems</h3><p>Python, OpenCV &amp; InsightFace</p><small>Team contribution · ADSUM</small><Arrow /></a></div>
-            <TechTape /><div className="recruiter-actions"><a className="button button-paper" href="public/cv/Taha-Zerrad-CV.pdf" download>DOWNLOAD CV ↓</a><a className="text-link" href="mailto:tahazerrad123@gmail.com">DISCUSS AN OPPORTUNITY <Arrow /></a></div>
-          </section>
+
           <section className="work-section paper-section" id="work" data-nav-section aria-labelledby="work-heading">
-            <div className="chapter-heading" data-reveal="left"><p className="eyebrow">02 / SELECTED PROJECTS</p><h2 id="work-heading">Three projects. Real experience.</h2><p>Client work, an internship, and a team contribution.</p></div>
-            <div className="featured-carousel" role="region" aria-label="Featured projects">
-              <div className="featured-track" id="featured-projects">{featured.map(project=><div className="featured-slide" data-gallery-slide key={project.id}><ProjectCard project={project} /></div>)}</div>
-              <div className="gallery-controls"><button type="button" data-gallery-prev aria-controls="featured-projects" aria-label="Previous project">←</button><span data-gallery-status aria-live="polite">1 / 3</span><button type="button" data-gallery-next aria-controls="featured-projects" aria-label="Next project">→</button></div>
-              <div className="gallery-dots" role="group" aria-label="Choose project">{featured.map((project,i)=><button type="button" key={project.id} data-gallery-index={i} aria-controls="featured-projects" aria-pressed={i===0}>{project.title}</button>)}</div>
-            </div>
+            <div className="chapter-heading" data-reveal="left"><p className="eyebrow">01 / SELECTED PROJECTS</p><h2 id="work-heading">A few ideas.<br /><em>A lot of late nights.</em></h2><p>Client work, internship experience, and experiments brought to life. Explore the projects, then open the details for my contribution.</p></div>
+            <ProjectShowcase />
             <a className="collection-link" href="projects.html"><span>VIEW ALL PROJECTS</span><span>10 <Arrow /></span></a>
           </section>
 
+          <section className="capability-section paper-section" id="skills" data-nav-section aria-labelledby="skills-heading">
+            <div className="chapter-heading" data-reveal="left"><p className="eyebrow">02 / WHAT I CAN CONTRIBUTE</p><h2 id="skills-heading">Full-stack skills.<br />Practical experience.</h2><p>Fourth-year Computer Engineering and Networks student at EMSI, Tangier. Full-stack development experience; aspiring to specialize in cybersecurity.</p></div>
+            <div className="skill-evidence"><a href="#work" data-reveal="left"><span>01 / WEB</span><h3>Build web applications</h3><p>React, Next.js, PHP &amp; Laravel</p><small>Client work · LILOOK storefront</small><Arrow /></a><a href="#work" data-reveal="right"><span>02 / DASHBOARDS</span><h3>Make complex tasks usable</h3><p>Administration interfaces &amp; databases</p><small>Internship · Recruitment Engine</small><Arrow /></a><a href="#work" data-reveal="left"><span>03 / PYTHON</span><h3>Contribute to AI systems</h3><p>Python, OpenCV &amp; InsightFace</p><small>Team contribution · ADSUM</small><Arrow /></a></div>
+            <TechTape /><div className="recruiter-actions"><a className="button button-paper" href="public/cv/Taha-Zerrad-CV.pdf" download>DOWNLOAD CV ↓</a><a className="text-link" href="mailto:tahazerrad123@gmail.com">DISCUSS AN OPPORTUNITY <Arrow /></a></div>
+          </section>
           <section className="experience-section paper-section" id="about" data-nav-section aria-labelledby="story-heading">
-            <div className="experience-profile" data-reveal="left"><p className="eyebrow">03 / EDUCATION &amp; EXPERIENCE</p><h2 id="story-heading">Education & experience.</h2><p>Fourth-year EMSI student with a full-stack diploma, client work, and experience developing administration interfaces during an internship.</p><a className="text-link" href="mailto:tahazerrad123@gmail.com">LET’S TALK <Arrow /></a><a className="email-link" href="mailto:tahazerrad123@gmail.com"></a></div>
+            <div className="experience-profile" data-reveal="left"><div className="experience-emblem" aria-hidden="true"><span>LEARN. BUILD. REPEAT.</span><Bat /><span>THE STORY SO FAR / TZ</span></div><p className="eyebrow">03 / EDUCATION &amp; EXPERIENCE</p><h2 id="story-heading">Education & experience.</h2><p>Fourth-year EMSI student with a full-stack diploma, client work, and experience developing administration interfaces during an internship.</p><a className="text-link" href="mailto:tahazerrad123@gmail.com">LET’S TALK <Arrow /></a><a className="email-link" href="mailto:tahazerrad123@gmail.com"></a></div>
             <div id="journey" className="experience-timeline" data-reveal="right"><div className="milestones">
               <details open><summary><span className="milestone-date">INTERNSHIP / IKSATECH</span><strong>Administration interface · Recruitment platform</strong><span className="milestone-toggle" aria-hidden="true">+</span></summary><p>Worked with colleagues on a recruitment and AI matching platform at Iksatech. My contribution focused on the administration interface: managing users, reviewing reported users, job offers, and settings.</p><a className="text-link" href="projects.html">VIEW THE PROJECT <Arrow /></a></details>
               <details open><summary><span className="milestone-date">2023 — 2025 / PAST</span><strong>Full-stack diploma</strong><span className="milestone-toggle" aria-hidden="true">+</span></summary><p>Full-stack Web Development diploma at OFPPT–ISMO, Tétouan. The foundations of software, databases, and working as a team.</p></details>
@@ -213,16 +244,18 @@ export default function Home() {
 
           <section className="certifications-section paper-section" id="certifications" data-nav-section aria-labelledby="certifications-heading">
             <div className="chapter-heading"><p className="eyebrow">04 / CONTINUING EDUCATION</p><h2 id="certifications-heading">Courses & certifications.</h2><p>Continued learning in software engineering, programming, and Unix. View each Coursera credential for verification.</p></div>
-            <div className="certification-list">
-              <article className="certification-card"><div><p className="eyebrow">COURSERA</p><h3>Using Python to Access Web Data</h3><p>Python · Web data</p></div><a className="text-link" href="https://www.coursera.org/account/accomplishments/verify/1B5S190NJA61" target="_blank" rel="noreferrer" aria-label="Verify certificate: Using Python to Access Web Data">VERIFY CERTIFICATE <Arrow /></a></article>
-              <article className="certification-card"><div><p className="eyebrow">COURSERA</p><h3>Software Engineering: Software Design and Project Management</h3><p>Software design · Project management</p></div><a className="text-link" href="https://www.coursera.org/account/accomplishments/verify/OEEO3YUWD9EV" target="_blank" rel="noreferrer" aria-label="Verify certificate: Software Engineering: Software Design and Project Management">VERIFY CERTIFICATE <Arrow /></a></article>
-              <article className="certification-card"><div><p className="eyebrow">COURSERA</p><h3>Introduction à la programmation orientée objet (en C++)</h3><p>C++ · Object-oriented programming</p></div><a className="text-link" href="https://www.coursera.org/account/accomplishments/verify/PR3TEOVLKSAU" target="_blank" rel="noreferrer" aria-label="Verify certificate: Introduction à la programmation orientée objet (en C++)">VERIFY CERTIFICATE <Arrow /></a></article>
-              <article className="certification-card"><div><p className="eyebrow">COURSERA</p><h3>The Unix Workbench</h3><p>Unix · Command line</p></div><a className="text-link" href="https://www.coursera.org/account/accomplishments/verify/J6OEUEUXL2QY" target="_blank" rel="noreferrer" aria-label="Verify certificate: The Unix Workbench">VERIFY CERTIFICATE <Arrow /></a></article>
-              <article className="certification-card"><div><p className="eyebrow">COURSERA</p><h3>Interactivity with JavaScript</h3><p>JavaScript · Interactive interfaces</p></div><a className="text-link" href="https://www.coursera.org/account/accomplishments/verify/S5RKXGHZCDOV" target="_blank" rel="noreferrer" aria-label="Verify certificate: Interactivity with JavaScript">VERIFY CERTIFICATE <Arrow /></a></article>
+            <div className="credential-controls"><span>FIVE COURSES. ALWAYS LEARNING.</span><div><button type="button" data-credential-step="-1" aria-label="Previous certificate">←</button><button type="button" data-credential-step="1" aria-label="Next certificate">→</button></div></div><div className="certification-list" tabIndex={0} aria-label="Courses and certifications; scroll to explore">
+              <article className="certification-card" data-tilt><span className="credential-top"><span>COURSE / 01</span><span className="credential-spark" aria-hidden="true">✳</span></span><span className="credential-mark" aria-hidden="true">PY</span><div><p className="eyebrow">COURSERA</p><h3>Using Python to Access Web Data</h3><p>Python · Web data</p></div><a className="text-link" href="https://www.coursera.org/account/accomplishments/verify/1B5S190NJA61" target="_blank" rel="noreferrer" aria-label="Verify certificate: Using Python to Access Web Data">VERIFY CERTIFICATE <Arrow /></a></article>
+              <article className="certification-card" data-tilt><span className="credential-top"><span>COURSE / 02</span><span className="credential-spark" aria-hidden="true">✳</span></span><span className="credential-mark" aria-hidden="true">SE</span><div><p className="eyebrow">COURSERA</p><h3>Software Engineering: Software Design and Project Management</h3><p>Software design · Project management</p></div><a className="text-link" href="https://www.coursera.org/account/accomplishments/verify/OEEO3YUWD9EV" target="_blank" rel="noreferrer" aria-label="Verify certificate: Software Engineering: Software Design and Project Management">VERIFY CERTIFICATE <Arrow /></a></article>
+              <article className="certification-card" data-tilt><span className="credential-top"><span>COURSE / 03</span><span className="credential-spark" aria-hidden="true">✳</span></span><span className="credential-mark" aria-hidden="true">C++</span><div><p className="eyebrow">COURSERA</p><h3>Introduction à la programmation orientée objet (en C++)</h3><p>C++ · Object-oriented programming</p></div><a className="text-link" href="https://www.coursera.org/account/accomplishments/verify/PR3TEOVLKSAU" target="_blank" rel="noreferrer" aria-label="Verify certificate: Introduction à la programmation orientée objet (en C++)">VERIFY CERTIFICATE <Arrow /></a></article>
+              <article className="certification-card" data-tilt><span className="credential-top"><span>COURSE / 04</span><span className="credential-spark" aria-hidden="true">✳</span></span><span className="credential-mark" aria-hidden="true">UNIX</span><div><p className="eyebrow">COURSERA</p><h3>The Unix Workbench</h3><p>Unix · Command line</p></div><a className="text-link" href="https://www.coursera.org/account/accomplishments/verify/J6OEUEUXL2QY" target="_blank" rel="noreferrer" aria-label="Verify certificate: The Unix Workbench">VERIFY CERTIFICATE <Arrow /></a></article>
+              <article className="certification-card" data-tilt><span className="credential-top"><span>COURSE / 05</span><span className="credential-spark" aria-hidden="true">✳</span></span><span className="credential-mark" aria-hidden="true">JS</span><div><p className="eyebrow">COURSERA</p><h3>Interactivity with JavaScript</h3><p>JavaScript · Interactive interfaces</p></div><a className="text-link" href="https://www.coursera.org/account/accomplishments/verify/S5RKXGHZCDOV" target="_blank" rel="noreferrer" aria-label="Verify certificate: Interactivity with JavaScript">VERIFY CERTIFICATE <Arrow /></a></article>
             </div>
           </section>
 
-          <section className="contact-section" id="contact" data-nav-section aria-labelledby="contact-heading"><div className="contact-copy"><p className="eyebrow">05 / THE NEXT CHAPTER</p><h2 id="contact-heading">Let’s build<br /><em>something.</em></h2><p>Looking for a developer or an intern?<br />Let’s discuss where I can contribute.</p><div className="contact-links"><a className="button button-paper" href="mailto:tahazerrad123@gmail.com">SEND AN EMAIL <Arrow /></a><a className="button button-outline" href="public/cv/Taha-Zerrad-CV.pdf" download>DOWNLOAD CV <span aria-hidden="true">↓</span></a></div><div className="social-links"><a href={linkedin} target="_blank" rel="noreferrer">LinkedIn <Arrow /></a><a href={github} target="_blank" rel="noreferrer">GitHub <Arrow /></a><span>PDF · Original French version</span></div></div><div className="signal-art" aria-hidden="true"><div className="signal-circle"><Bat /></div></div></section>
+          </div></div>
+          </div>
+          <section className="contact-section" id="contact" data-nav-section aria-labelledby="contact-heading"><div className="contact-atmosphere" data-contact-glow aria-hidden="true" /><div className="contact-orbit" aria-hidden="true" /><div className="contact-copy"><p className="eyebrow">05 / THE NEXT CHAPTER</p><h2 id="contact-heading"><span>Let’s build</span><em>something.</em></h2><p>Looking for a developer or an intern?<br />Let’s discuss where I can contribute.</p><div className="contact-links"><a className="button button-paper" href="mailto:tahazerrad123@gmail.com">SEND AN EMAIL <Arrow /></a><a className="button button-outline" href="public/cv/Taha-Zerrad-CV.pdf" download>DOWNLOAD CV <span aria-hidden="true">↓</span></a></div><div className="social-links"><a href={linkedin} target="_blank" rel="noreferrer">LinkedIn <Arrow /></a><a href={github} target="_blank" rel="noreferrer">GitHub <Arrow /></a><span>PDF · Original French version</span></div></div><div className="contact-signature" aria-hidden="true"><Bat /><span>A GOOD IDEA<br />DESERVES A SIGNAL.</span></div></section>
           <footer className="paper-footer"><a href="#home" className="footer-brand">The Gotham Times</a><p>© <span data-year>2026</span> TAHA ZERRAD</p><a href="#home" className="back-top" aria-label="Back to top">↑</a></footer>
         </div>
       </main>
@@ -231,6 +264,7 @@ export default function Home() {
       <ProjectDialogs items={featured} />
       <Script src="public/translations.js" strategy="afterInteractive" />
       <Script src="public/newspaper.js" strategy="afterInteractive" />
+      <Script src="public/experience.js" strategy="afterInteractive" />
     </>
   );
 }
@@ -244,4 +278,5 @@ export function ProjectArchive() { return <><div className="language-bar"><a hre
             <div className="work-footer"><span data-filter-status role="status" aria-live="polite">10 stories in this edition</span><a className="text-link" href={github} target="_blank" rel="noreferrer">GITHUB PROFILE <Arrow /></a></div>
           </section>
 
-<section className="archive-contact"><a className="button button-paper" href="public/cv/Taha-Zerrad-CV.pdf" download>DOWNLOAD CV ↓</a><a className="text-link" href="index.html#contact">CONTACT ME <Arrow /></a></section></main><ProjectDialogs /><Script src="public/translations.js" strategy="afterInteractive" /><Script src="public/newspaper.js" strategy="afterInteractive" /></>; }
+<section className="archive-contact"><a className="button button-paper" href="public/cv/Taha-Zerrad-CV.pdf" download>DOWNLOAD CV ↓</a><a className="text-link" href="index.html#contact">CONTACT ME <Arrow /></a></section></main><ProjectDialogs /><Script src="public/translations.js" strategy="afterInteractive" /><Script src="public/newspaper.js" strategy="afterInteractive" />
+      <Script src="public/experience.js" strategy="afterInteractive" /></>; }
