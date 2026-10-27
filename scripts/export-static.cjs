@@ -1,4 +1,5 @@
 /* Keep the GitHub Pages entry in sync with the Next.js page source. */
+require('./build-experience.cjs');
 const fs = require('node:fs');
 const path = require('node:path');
 const Module = require('node:module');
@@ -38,8 +39,10 @@ const html = `<!DOCTYPE html>
   <meta name="theme-color" content="#191713">
   <title>Taha Zerrad | The Gotham Times</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles/experience.css">
   <script src="public/translations.js" defer></script>
   <script src="public/newspaper.js" defer></script>
+  <script src="public/experience.js" defer></script>
 </head>
 <body>${body}</body>
 </html>
